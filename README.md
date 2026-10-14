@@ -1,11 +1,64 @@
-<div align="center">
+# Àdùn — Afro-Fusion Fine Dining & Salon
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+An elevated West African gastronomic sanctuary in Victoria Island, Lagos. Indigenous terroir, 9-course chef's tasting journey, woodfire hearth, and late-night vinyl lounge.
 
-  <h1>Built with AI Studio</h2>
+---
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## 🚀 Deploying to Vercel
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+This project is pre-configured and 100% production-ready for deployment on [Vercel](https://vercel.com).
 
-</div>
+### Option 1: Deploy via GitHub (Recommended)
+
+1. Push this repository to GitHub or GitLab.
+2. Go to your [Vercel Dashboard](https://vercel.com/dashboard) and click **"Add New..."** > **"Project"**.
+3. Import your repository.
+4. Vercel automatically detects the framework presets from `vercel.json` and `package.json`:
+   - **Framework Preset**: `Vite`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+   - **Install Command**: `npm install`
+5. Click **Deploy**. Your site will be live on a secure Vercel URL in seconds!
+
+### Option 2: Deploy using Vercel CLI
+
+1. Install the Vercel CLI globally (if not already installed):
+   ```bash
+   npm i -g vercel
+   ```
+2. In the project root directory, run:
+   ```bash
+   vercel
+   ```
+3. Follow the prompts. To deploy directly to production:
+   ```bash
+   vercel --prod
+   ```
+
+---
+
+## 🛠️ Local Development
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Build for production:
+   ```bash
+   npm run build
+   ```
+4. Preview production build locally:
+   ```bash
+   npm run preview
+   ```
+
+---
+
+## ⚙️ Configuration Details
+
+- `vercel.json`: Handles SPA rewrites (`/(.*) -> /index.html`) so client-side routing and page reloads work smoothly without 404 errors.
+- Forms are wired via FormSubmit (`32056367a847e46a95ba48aca22f7755`) without exposing personal email addresses directly.

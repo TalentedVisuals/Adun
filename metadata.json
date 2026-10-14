@@ -1,0 +1,6 @@
+{
+  "name": "Àdùn — Afro-Fusion Fine Dining & Salon",
+  "description": "Àdùn is an elevated West African gastronomic sanctuary in Victoria Island, Lagos. Indigenous terroir, 9-course chef's tasting journey, woodfire hearth, and late-night vinyl lounge.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

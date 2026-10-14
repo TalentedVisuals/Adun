@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: "Fraunces", Georgia, serif;
+    --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+    --font-mono: "Space Mono", monospace;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    width: 100%;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Custom Typography & Utility Classes */
+.font-serif-luxury {
+  font-family: var(--font-serif);
+  font-optical-sizing: auto;
+}
+
+.font-sans-clean {
+  font-family: var(--font-sans);
+  font-optical-sizing: auto;
+}
+
+.font-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Luxury Gold and Champagne Gradients */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #f7ecd5 0%, #cba358 50%, #9e7528 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Rich Burnished Antique Gold for Light Backgrounds (High Contrast >= 7:1) */
+.gold-gradient-text-light {
+  background: linear-gradient(135deg, #6c470a 0%, #94691b 50%, #523507 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Light Theme Automatic Contrast Adaptor */
+.light-theme .gold-gradient-text {
+  background: linear-gradient(135deg, #6c470a 0%, #94691b 50%, #523507 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border-glow {
+  box-shadow: 0 0 35px -8px rgba(203, 163, 88, 0.22);
+}
+
+/* Interactive Card Zoom & Haptic Shake Animations - Guarded for desktop pointer hover */
+@keyframes haptic-hover {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  20% {
+    transform: translateY(-3px) scale(1.015) rotate(-0.5deg);
+  }
+  40% {
+    transform: translateY(-4px) scale(1.02) rotate(0.5deg);
+  }
+  60% {
+    transform: translateY(-4px) scale(1.02) rotate(-0.2deg);
+  }
+  80% {
+    transform: translateY(-4px) scale(1.02) rotate(0.1deg);
+  }
+  100% {
+    transform: translateY(-4px) scale(1.02) rotate(0deg);
+  }
+}
+
+.card-interactive {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.35s ease;
+  will-change: transform, box-shadow;
+  max-width: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card-interactive:hover {
+    animation: haptic-hover 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    box-shadow: 0 16px 36px -10px rgba(203, 163, 88, 0.28);
+    border-color: rgba(203, 163, 88, 0.5) !important;
+  }
+}
+
+.card-interactive:active {
+  transform: scale(0.99);
+}
+
+/* Subtle variant for smaller talk boxes, quotes, and badges */
+@keyframes haptic-talkbox {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2px) scale(1.01) rotate(-0.4deg);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.015) rotate(0.4deg);
+  }
+  75% {
+    transform: translateY(-3px) scale(1.015) rotate(-0.2deg);
+  }
+  100% {
+    transform: translateY(-3px) scale(1.015) rotate(0deg);
+  }
+}
+
+.talkbox-interactive {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease;
+  will-change: transform, box-shadow;
+  max-width: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .talkbox-interactive:hover {
+    animation: haptic-talkbox 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    box-shadow: 0 14px 30px -8px rgba(203, 163, 88, 0.24);
+    border-color: rgba(203, 163, 88, 0.45) !important;
+  }
+}
+
+.talkbox-interactive:active {
+  transform: scale(0.99);
+}
+
+/* Hide scrollbar utility for sleek horizontal tab navigation on mobile */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Ambient Grain Texture */
+.bg-grain {
+  background-image: radial-gradient(rgba(203, 163, 88, 0.035) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080706;
+}
+::-webkit-scrollbar-thumb {
+  background: #231f1a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #cba358;
+}
+
+/* Smooth Image Reveal & Parallax */
+.parallax-layer {
+  will-change: transform;
+}
