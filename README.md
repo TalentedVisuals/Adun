@@ -61,4 +61,6 @@ This project is pre-configured and 100% production-ready for deployment on [Verc
 ## ⚙️ Configuration Details
 
 - `vercel.json`: Handles SPA rewrites (`/(.*) -> /index.html`) so client-side routing and page reloads work smoothly without 404 errors.
+- `.npmrc` & `package-lock.json`: Pre-configured with resolved dependencies and `legacy-peer-deps=true` to eliminate `ERESOLVE` npm peer dependency installation errors during Vercel builds.
+- `"engines": { "node": ">=20.0.0" }`: Ensures Vercel selects Node.js 20 or higher for full Vite 8 compatibility.
 - Forms are wired via FormSubmit (`32056367a847e46a95ba48aca22f7755`) without exposing personal email addresses directly.
