@@ -42,14 +42,14 @@ export const Navbar: React.FC<NavbarProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 w-full flex items-center justify-between gap-2 sm:gap-4 lg:gap-6">
         
-        {/* Zone 1: Single text element wordmark */}
+        {/* Zone 1: Brand Wordmark */}
         <a
           href="#"
-          className={`font-serif-luxury text-xl sm:text-2xl xl:text-3xl tracking-[0.2em] sm:tracking-[0.24em] uppercase font-medium whitespace-nowrap shrink-0 transition-colors ${
+          className={`font-serif-luxury text-2xl sm:text-3xl xl:text-3xl tracking-[0.12em] font-medium whitespace-nowrap shrink-0 transition-colors ${
             isLightMode ? 'text-[#1a1715] hover:text-[#9e7528]' : 'text-[#f5ede0] hover:text-[#cba358]'
           }`}
         >
-          À D Ù N
+          Adùn
         </a>
 
         {/* Zone 2: Concise nav links with reduced font size & tighter responsive spacing */}

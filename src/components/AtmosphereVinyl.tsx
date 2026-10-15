@@ -172,13 +172,13 @@ export const AtmosphereVinyl: React.FC<AtmosphereVinylProps> = ({ isLightMode })
           <div className="relative group rounded-2xl overflow-hidden h-64 sm:h-80 border border-white/10 shadow-lg card-interactive cursor-pointer">
             <ImageWithFallback
               src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=700&q=80"
-              alt="Artisanal Cocktails"
+              alt="Artisanal Zero-Proof Elixirs"
               fallbackTitle="BOTANICAL GLASSWARE"
               className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
             />
             <div className="absolute inset-0 bg-black/40 group-hover:bg-black/10 transition" />
             <div className="absolute bottom-3 left-3 text-[11px] text-white font-medium drop-shadow">
-              Àdùn Smoked Sour
+              Adùn Smoked Tamarind Elixir
             </div>
           </div>
 

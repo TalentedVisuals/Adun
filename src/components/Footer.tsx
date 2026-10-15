@@ -55,11 +55,11 @@ export const Footer: React.FC<FooterProps> = ({ isLightMode }) => {
         <div className="md:col-span-5 space-y-4">
           <div className="flex items-center gap-3">
             <span
-              className={`font-serif-luxury text-3xl tracking-[0.25em] uppercase font-bold ${
+              className={`font-serif-luxury text-3xl sm:text-4xl tracking-[0.12em] font-bold ${
                 isLightMode ? 'text-[#1a1715]' : 'text-white'
               }`}
             >
-              À D Ù N
+              Adùn
             </span>
           </div>
           <p className="text-xs max-w-sm font-light leading-relaxed opacity-80">
@@ -118,7 +118,7 @@ export const Footer: React.FC<FooterProps> = ({ isLightMode }) => {
             Secret Pop-Ups & Harvest Drops
           </h4>
           <p className="text-xs font-light opacity-80 leading-relaxed">
-            Receive confidential notices for guest Michelin-chef collaborations, rare wine allocations, and seasonal harvest menus.
+            Receive confidential notices for guest Michelin-chef collaborations, rare botanical elixir harvests, and seasonal tasting menus.
           </p>
 
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
@@ -154,7 +154,7 @@ export const Footer: React.FC<FooterProps> = ({ isLightMode }) => {
       {/* Bottom Attribution */}
       <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-[11px] opacity-60 gap-4 text-center sm:text-left">
         <div>
-          © 2026 Àdùn Group Ltd. All rights reserved. Victoria Island, Lagos.
+          © 2026 Adùn Group Ltd. All rights reserved. Victoria Island, Lagos.
         </div>
         <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-6">
           <a href="#" className="hover:text-[#cba358] transition">

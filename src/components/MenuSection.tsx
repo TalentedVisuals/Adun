@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Wine, Flame, Sparkles, Info, ArrowUpRight } from 'lucide-react';
+import { GlassWater, Flame, Sparkles, Info, ArrowUpRight, ShieldCheck } from 'lucide-react';
 import { MenuCategory, DietaryTag, MenuItem, Currency } from '../types';
 import { MENU_ITEMS, formatPrice } from '../data/restaurantData';
 import { ImageWithFallback } from './ImageWithFallback';
@@ -40,9 +40,15 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>
-            <span className="text-xs uppercase tracking-[0.25em] text-[#cba358] font-semibold block mb-2">
-              The Gastronomy
-            </span>
+            <div className="flex items-center gap-2.5 mb-2">
+              <span className="text-xs uppercase tracking-[0.25em] text-[#cba358] font-semibold block">
+                The Gastronomy
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] tracking-wider uppercase font-semibold bg-[#cba358]/15 text-[#cba358] border border-[#cba358]/30">
+                <ShieldCheck className="w-3 h-3" />
+                100% Halal Kitchen & Zero-Proof Cellar
+              </span>
+            </div>
             <h2
               className={`font-serif-luxury text-3xl sm:text-5xl font-normal ${
                 isLightMode ? 'text-[#1a1715]' : 'text-white'
@@ -52,7 +58,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
             </h2>
           </div>
           <p className="text-xs sm:text-sm opacity-60 max-w-md mt-4 md:mt-0 font-light leading-relaxed">
-            Menus evolve with moon phases and harvests across Ogun, Jos Plateau, and the Gulf of Guinea.
+            Menus evolve with moon phases and harvests across Ogun, Jos Plateau, and the Gulf of Guinea. All meats are certified halal; entirely alcohol-free.
           </p>
         </div>
 
@@ -64,7 +70,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
             {[
               { id: 'tasting', label: `Chef’s Tasting (${formatPrice(85000, currency)})` },
               { id: 'alacarte', label: 'À La Carte' },
-              { id: 'cocktails', label: 'Mixology & Cellar' },
+              { id: 'elixirs', label: 'Zero-Proof Elixirs' },
               { id: 'dessert', label: 'Late Night & Sweets' },
             ].map((cat) => {
               const isActive = activeCategory === cat.id;
@@ -181,7 +187,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                 <div className="mt-5 pt-3.5 border-t border-white/10 flex flex-wrap items-center justify-between gap-2 text-xs">
                   {item.pairing ? (
                     <div className="flex items-center gap-1.5 opacity-80 text-[11px] min-w-0">
-                      <Wine className="w-3.5 h-3.5 text-[#cba358] shrink-0" />
+                      <GlassWater className="w-3.5 h-3.5 text-[#cba358] shrink-0" />
                       <span className="truncate">{item.pairing}</span>
                     </div>
                   ) : (

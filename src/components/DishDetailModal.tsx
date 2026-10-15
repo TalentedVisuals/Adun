@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Wine, Sparkles, Flame, MapPin, Check } from 'lucide-react';
+import { X, Sparkles, Flame, MapPin, Check } from 'lucide-react';
 import { MenuItem, Currency } from '../types';
 import { formatPrice } from '../data/restaurantData';
 import { ImageWithFallback } from './ImageWithFallback';
@@ -40,7 +40,7 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
         {/* Modal Header */}
         <div className="mb-6">
           <div className="flex items-center gap-2 text-xs tracking-widest uppercase text-[#cba358] font-semibold mb-1">
-            <span>{dish.courseNumber || 'Àdùn Repertory'}</span>
+            <span>{dish.courseNumber || 'Adùn Repertory'}</span>
             {dish.nativeTitle && (
               <>
                 <span>·</span>
@@ -88,13 +88,13 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
           )}
         </div>
 
-        {/* Sommelier Pairing */}
+        {/* Botanical Elixir Pairing */}
         {dish.pairing && (
           <div className="p-4 rounded-xl border border-[#cba358]/20 bg-[#cba358]/5 mb-6 flex items-start gap-3">
-            <Wine className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
+            <Sparkles className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
             <div>
               <span className="text-[10px] tracking-widest uppercase text-[#cba358] font-semibold block">
-                Sommelier Pairing Recommendation
+                Artisanal Botanical Elixir Pairing (100% Halal)
               </span>
               <span className="text-xs sm:text-sm font-medium">{dish.pairing}</span>
             </div>

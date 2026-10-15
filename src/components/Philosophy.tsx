@@ -44,10 +44,10 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ isLightMode }) => {
               }`}
             >
               <p>
-                Founded in Victoria Island by culinary director <strong>Tunde Adeleke</strong> and beverage visionary <strong>Nkem Okafor</strong>, <strong>Àdùn</strong> rejects the ordinary. We honor centuries of Yoruba, Igbo, and Niger-Delta culinary intelligence: the subtle smoke of ijebu garri, aged palm oils filtered through activated charcoal, sweet-tart àgbálùmọ́ coulis, and wild-caught Atlantic crayfish simmered for thirty hours.
+                Founded in Victoria Island by culinary director <strong>Tunde Adeleke</strong> and beverage visionary <strong>Nkem Okafor</strong>, <strong>Adùn</strong> rejects the ordinary. We honor centuries of Yoruba, Igbo, and Niger-Delta culinary intelligence: the subtle smoke of ijebu garri, pure golden virgin palm fruit oil filtered through activated charcoal, sweet-tart àgbálùmọ́ coulis, and wild-caught Atlantic crayfish simmered for thirty hours.
               </p>
               <p>
-                Every evening is choreographed: from the low glow of handcrafted clay lanterns to the gentle warmth of our open charcoal hearth. This is Lagos dining at the highest sovereign standard.
+                Every evening is choreographed: from the low glow of handcrafted clay lanterns to the gentle warmth of our open charcoal hearth. Our entire culinary repertoire is strictly 100% Halal certified, completely alcohol-free, and crafted with uncompromising gastronomic integrity. This is Lagos dining at the highest sovereign standard.
               </p>
             </div>
 
@@ -60,7 +60,7 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ isLightMode }) => {
               }`}
             >
               <blockquote className="font-serif-luxury italic text-base sm:text-xl leading-snug text-inherit opacity-90">
-                "Lagos is chaotic poetry. Àdùn is the quiet sanctuary where that intensity is distilled into one transcendent bite."
+                "Lagos is chaotic poetry. Adùn is the quiet sanctuary where that intensity is distilled into one transcendent bite."
               </blockquote>
               <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-white/5">
                 <div className="flex items-center gap-3">
@@ -96,10 +96,10 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ isLightMode }) => {
               </div>
               <div>
                 <span className="font-serif-luxury text-2xl sm:text-4xl text-[#cba358] block font-tabular font-normal">
-                  140+
+                  100%
                 </span>
                 <span className="text-[9px] sm:text-[11px] tracking-wider uppercase opacity-60 block mt-0.5 leading-tight">
-                  Cellar Allocation Labels
+                  Halal Certified & Zero-Proof
                 </span>
               </div>
             </div>
@@ -111,7 +111,7 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ isLightMode }) => {
             <div className="relative rounded-3xl overflow-hidden border border-white/10 hover:border-[#cba358]/40 shadow-2xl group cursor-pointer transition-colors duration-500">
               <ImageWithFallback
                 src="https://lh3.googleusercontent.com/pw/AP1GczOwPbCj4_D0BU3f3aRSoQSVv0udj0mPjS_oRFiUWlxD-my0qq7KVtIgw9se515p6TXzzK251w0VmHVQi6nU4pKLsUbdmpgVj1rexJBKVl4LKk2yCH0B7IodK0bagytikaIy0nXUXa5L1eZNSOUuPDWwXw=w759-h607-s-no-gm"
-                alt="Culinary Manifesto - Àdùn Dining Sanctuary"
+                alt="Culinary Manifesto - Adùn Dining Sanctuary"
                 fallbackTitle="THE CULINARY MANIFESTO"
                 className="w-full h-80 sm:h-[420px] lg:h-[520px] object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-108 will-change-transform"
               />

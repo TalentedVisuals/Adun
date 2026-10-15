@@ -87,7 +87,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          _subject: `New Àdùn Reservation Pass [${randomCode}] - ${name || 'Valued Guest'} (${guests})`,
+          _subject: `New Adùn Reservation Pass [${randomCode}] - ${name || 'Valued Guest'} (${guests})`,
           _template: 'table',
           _captcha: 'false',
           'Reference Code': randomCode,
@@ -125,9 +125,9 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
     const icsContent = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//Àdùn Victoria Island//Reservation Pass//EN',
+      'PRODID:-//Adùn Victoria Island//Reservation Pass//EN',
       'BEGIN:VEVENT',
-      `SUMMARY:Dinner Reservation at Àdùn (${confirmedReservation.experience})`,
+      `SUMMARY:Dinner Reservation at Adùn (${confirmedReservation.experience})`,
       `DESCRIPTION:Reservation Reference: ${confirmedReservation.referenceCode}\\nGuests: ${confirmedReservation.guests}\\nHost Desk: +234 808 920 0011`,
       'LOCATION:Plot 14B Sinari Daranijo St, Victoria Island, Lagos, Nigeria',
       `DTSTART:${confirmedReservation.date.replace(/-/g, '')}T180000Z`,
@@ -140,7 +140,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.setAttribute('download', `Adun-Reservation-${confirmedReservation.referenceCode}.ics`);
+    link.setAttribute('download', `Adùn-Reservation-${confirmedReservation.referenceCode}.ics`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -337,6 +337,9 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
               <div>
                 <label className="block text-[11px] tracking-widest uppercase opacity-60 mb-1.5 font-medium">
                   Dietary Allergies or Special Host Instructions (Optional)
+                  <span className="text-[10px] text-[#cba358] normal-case tracking-normal block mt-0.5">
+                    Note: All dining, meats, and beverages at Adùn are strictly 100% Halal certified and alcohol-free.
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -385,7 +388,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
               Reservation Confirmed
             </span>
             <h3 className="font-serif-luxury text-3xl font-normal mt-1 mb-2">
-              We Look Forward to Welcoming You to Àdùn
+              We Look Forward to Welcoming You to Adùn
             </h3>
             
             <p className="text-xs opacity-75 max-w-sm mx-auto mb-6">

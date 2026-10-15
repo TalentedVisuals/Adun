@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
-import { ArrowRight, Calendar, Compass, Wine, Clock } from 'lucide-react';
+import { ArrowRight, Calendar, Compass, Clock } from 'lucide-react';
 import { ImageWithFallback } from './ImageWithFallback';
 import { ThreeDLocationIcon } from './ThreeDLocationIcon';
 import { Currency } from '../types';
@@ -270,7 +270,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1400&q=80"
                 alt="Wood-Fired Afro-Fusion Gastronomy"
-                fallbackTitle="ÀDÙN SIGNATURE DISH"
+                fallbackTitle="ADÙN SIGNATURE DISH"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
             </motion.div>
@@ -305,7 +305,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
             >
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80"
-                alt="Skyline Terrace Cocktails"
+                alt="Skyline Terrace Botanical Elixirs"
                 fallbackTitle="ROOFTOP & SKYLINE"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -313,7 +313,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
               <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5">
                 <span className="text-[10px] tracking-widest uppercase text-[#cba358] font-medium">4th Floor Skyline</span>
                 <h3 className="font-serif-luxury text-lg sm:text-xl text-white font-medium mt-0.5">Terrace Lounge & Vinyl Parlour</h3>
-                <p className="text-xs text-[#e8ded1]/70 mt-1 line-clamp-1">Palm wine reductions, rare rums, and highlife-jazz reworks.</p>
+                <p className="text-xs text-[#e8ded1]/70 mt-1 line-clamp-1">Zero-proof botanical reductions, virgin spiced elixirs, and highlife-jazz reworks.</p>
               </div>
             </div>
 

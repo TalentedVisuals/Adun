@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Wine, GlassWater, ArrowRight } from 'lucide-react';
+import { Sparkles, GlassWater, ArrowRight, ShieldCheck } from 'lucide-react';
 import { ImageWithFallback } from './ImageWithFallback';
 import { Currency } from '../types';
 import { formatPrice } from '../data/restaurantData';
@@ -25,16 +25,16 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
             <div className="rounded-2xl overflow-hidden border border-white/10 h-56 sm:h-80 md:h-96 shadow-xl card-interactive cursor-pointer">
               <ImageWithFallback
                 src="https://lh3.googleusercontent.com/pw/AP1GczOT-yXxxSaR3qwJBzAKajwJ5hnDWaZh0UwZjFFWcGwVmze5oYGg9hn8d9-0cHS9l6uvIp3kITtiOfraxxQHuFcvYZIVgJVZeXmNed5TuyIJo9jcPbsDwYDMS9NgXQdgoELkriucb5f4ZMEEAE7LEb77lw=w607-h607-s-no-gm"
-                alt="Àdùn Mixology & Dining Table Craft"
-                fallbackTitle="THE OBSIDIAN CELLAR"
+                alt="Adùn Zero-Proof Mixology & Dining Table Craft"
+                fallbackTitle="THE BOTANICAL SANCTUARY"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
             </div>
             <div className="rounded-2xl overflow-hidden border border-white/10 h-56 sm:h-80 md:h-96 mt-4 sm:mt-6 shadow-xl card-interactive cursor-pointer">
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=800&q=80"
-                alt="Artisanal Cocktail Service and Smoke"
-                fallbackTitle="LIQUID ALCHEMY"
+                alt="Artisanal Zero-Proof Elixirs and Woodfire Essence"
+                fallbackTitle="BOTANICAL ALCHEMY"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
             </div>
@@ -43,9 +43,15 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
           {/* Right Column: Narrative & Features */}
           <div className="lg:col-span-6">
             
-            <span className="text-xs uppercase tracking-[0.25em] text-[#cba358] font-semibold block mb-2">
-              Liquid Alchemy
-            </span>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs uppercase tracking-[0.25em] text-[#cba358] font-semibold block">
+                Zero-Proof Botanical Alchemy
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] tracking-wider uppercase font-semibold bg-[#cba358]/15 text-[#cba358] border border-[#cba358]/30">
+                <ShieldCheck className="w-3 h-3" />
+                100% Halal
+              </span>
+            </div>
             
             <h2
               className={`font-serif-luxury text-3xl sm:text-5xl font-normal leading-tight mb-6 ${
@@ -53,7 +59,7 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
               }`}
               style={{ textWrap: 'balance' }}
             >
-              Clarified Palm Wine, Wild Botanicals & Grand Cru Champagnes.
+              Cold-Extracted Botanicals, Rare Tisanes & 100% Halal Elixirs.
             </h2>
 
             <p
@@ -61,7 +67,7 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
                 isLightMode ? 'text-[#1a1715]/75' : 'text-[#e8ded1]/75'
               }`}
             >
-              Our bar program treats spirits with the same reverence as our kitchen. Led by beverage director <strong>Nkem Okafor</strong>, we forage wild herbs across Southern Nigeria and distill bespoke cordials in our in-house glass rotary evaporator.
+              Our beverage program treats zero-proof mixology with the same reverence as our kitchen. Led by beverage director <strong>Nkem Okafor</strong>, we forage wild herbs across Southern Nigeria and distill bespoke virgin cordials, cold-pressed reductions, and aged botanicals in our in-house glass rotary evaporator. Strictly alcohol-free and 100% halal.
             </p>
 
             <div className="space-y-4 mb-8">
@@ -75,9 +81,9 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
               >
                 <GlassWater className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
                 <div className="min-w-0 flex-1">
-                  <h4 className="text-xs uppercase tracking-widest font-semibold">House Clarified Palm Wine</h4>
+                  <h4 className="text-xs uppercase tracking-widest font-semibold">House Clarified Kunu Aya & Lemongrass</h4>
                   <p className="text-xs opacity-75 mt-0.5 font-light leading-relaxed">
-                    Morning sap from Ogun palms centrifuged to water clarity, scented with bruised lemongrass and star anise.
+                    Organic northern tiger nuts and sun-dried baobab fruit centrifuged to pristine crystal silk, scented with bruised lemongrass and lime blossom.
                   </p>
                 </div>
               </div>
@@ -89,11 +95,11 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
                     : 'bg-[#171513] border-white/5'
                 }`}
               >
-                <Wine className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
+                <Sparkles className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
                 <div className="min-w-0 flex-1">
-                  <h4 className="text-xs uppercase tracking-widest font-semibold">The Sommelier’s Obsidian Cellar</h4>
+                  <h4 className="text-xs uppercase tracking-widest font-semibold">The Apothecary & Rare Tisane Reserve</h4>
                   <p className="text-xs opacity-75 mt-0.5 font-light leading-relaxed">
-                    Over 140 temperature-controlled allocations including rare Stellenbosch Old Vines, Châteauneuf-du-Pape, and vintage Champagnes.
+                    Over 80 temperature-controlled single-estate micro-lots including wild Jos highland mint, Kano deep-red hibiscus, and smoked spiced date cordials.
                   </p>
                 </div>
               </div>

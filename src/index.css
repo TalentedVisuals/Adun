@@ -7,6 +7,10 @@
     --font-mono: "Space Mono", monospace;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   html,
   body {
     overflow-x: hidden;
@@ -32,7 +36,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Luxury Gold and Champagne Gradients */
+/* Luxury Gold and Amber Gradients */
 .gold-gradient-text {
   background: linear-gradient(135deg, #f7ecd5 0%, #cba358 50%, #9e7528 100%);
   -webkit-background-clip: text;

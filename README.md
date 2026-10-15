@@ -1,4 +1,4 @@
-# Àdùn — Afro-Fusion Fine Dining & Salon
+# Adùn — Afro-Fusion Fine Dining & Salon
 
 An elevated West African gastronomic sanctuary in Victoria Island, Lagos. Indigenous terroir, 9-course chef's tasting journey, woodfire hearth, and late-night vinyl lounge.
 

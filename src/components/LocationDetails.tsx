@@ -35,7 +35,7 @@ export const LocationDetails: React.FC<LocationDetailsProps> = ({ isLightMode, o
                 Victoria Island, Lagos
               </h2>
               <p className="text-xs sm:text-sm opacity-75 font-light leading-relaxed">
-                Situated in a discreet residential sanctuary off Adeola Odeku, <strong>Àdùn</strong> offers private gated driveway access with dedicated security and valet reception.
+                Situated in a discreet residential sanctuary off Adeola Odeku, <strong>Adùn</strong> offers private gated driveway access with dedicated security and valet reception.
               </p>
             </div>
 

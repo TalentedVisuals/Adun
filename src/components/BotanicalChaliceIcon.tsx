@@ -1,45 +1,45 @@
 import React from 'react';
 
-interface Wine3DIconProps {
+interface BotanicalChaliceIconProps {
   className?: string;
 }
 
-export const Wine3DIcon: React.FC<Wine3DIconProps> = ({ className = 'w-6 h-6' }) => {
+export const BotanicalChaliceIcon: React.FC<BotanicalChaliceIconProps> = ({ className = 'w-6 h-6' }) => {
   return (
     <svg
       viewBox="0 0 36 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`shrink-0 filter drop-shadow-[0_2px_8px_rgba(203,163,88,0.45)] ${className}`}
-      aria-label="3D Sommelier Wine Glass Icon"
+      aria-label="3D Artisanal Botanical Elixir Chalice Icon"
       role="img"
     >
       <defs>
         {/* 3D Glass Body Gradient with Crystal Sheen */}
-        <linearGradient id="glassBodyGrad" x1="8" y1="4" x2="28" y2="24" gradientUnits="userSpaceOnUse">
+        <linearGradient id="chaliceGlassBody" x1="8" y1="4" x2="28" y2="24" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#ffffff" stopOpacity="0.6" />
           <stop offset="25%" stopColor="#cba358" stopOpacity="0.3" />
           <stop offset="65%" stopColor="#1a1715" stopOpacity="0.2" />
           <stop offset="100%" stopColor="#ffffff" stopOpacity="0.2" />
         </linearGradient>
 
-        {/* 3D Liquid Gradient (Deep Bordeaux Ruby into Warm Amber) */}
-        <linearGradient id="wineLiquidGrad" x1="10" y1="12" x2="26" y2="22" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#a31638" />
-          <stop offset="45%" stopColor="#67061d" />
-          <stop offset="85%" stopColor="#3d010e" />
-          <stop offset="100%" stopColor="#cba358" stopOpacity="0.9" />
+        {/* 3D Liquid Gradient (Hibiscus & Golden Amber Botanical Elixir) */}
+        <linearGradient id="elixirLiquidGrad" x1="10" y1="12" x2="26" y2="22" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#9e1b32" />
+          <stop offset="45%" stopColor="#cba358" />
+          <stop offset="85%" stopColor="#5a0818" />
+          <stop offset="100%" stopColor="#e4c47e" stopOpacity="0.9" />
         </linearGradient>
 
         {/* Liquid Meniscus Surface */}
-        <linearGradient id="meniscusGrad" x1="10" y1="12.5" x2="26" y2="12.5" gradientUnits="userSpaceOnUse">
+        <linearGradient id="elixirMeniscus" x1="10" y1="12.5" x2="26" y2="12.5" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#f0627e" />
           <stop offset="45%" stopColor="#e4c47e" />
           <stop offset="100%" stopColor="#7a0d24" />
         </linearGradient>
 
         {/* 3D Stem Gradient */}
-        <linearGradient id="stemGrad" x1="17" y1="21" x2="19" y2="31.5" gradientUnits="userSpaceOnUse">
+        <linearGradient id="chaliceStem" x1="17" y1="21" x2="19" y2="31.5" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#f3e2be" stopOpacity="0.95" />
           <stop offset="50%" stopColor="#947437" stopOpacity="0.85" />
           <stop offset="100%" stopColor="#f5dec0" stopOpacity="1" />
@@ -68,24 +68,24 @@ export const Wine3DIcon: React.FC<Wine3DIconProps> = ({ className = 'w-6 h-6' })
       <ellipse cx="18" cy="31.6" rx="5.2" ry="1.3" fill="#ffffff" fillOpacity="0.4" />
 
       {/* Slender 3D Crystal Stem */}
-      <path d="M17.3 21H18.7V31.5H17.3V21Z" fill="url(#stemGrad)" />
+      <path d="M17.3 21H18.7V31.5H17.3V21Z" fill="url(#chaliceStem)" />
 
       {/* Outer Crystal Bowl Silhouette with 3D Depth */}
       <path
         d="M10 5.5 C10 4.5, 26 4.5, 26 5.5 C26 13.5, 23.8 21, 18 21.5 C12.2 21, 10 13.5, 10 5.5 Z"
-        fill="url(#glassBodyGrad)"
+        fill="url(#chaliceGlassBody)"
         stroke="rgba(255,255,255,0.45)"
         strokeWidth="0.8"
       />
 
-      {/* Deep Rich Wine Liquid Fill */}
+      {/* Deep Rich Hibiscus & Amber Elixir Liquid Fill */}
       <path
         d="M10.8 12.8 C11.5 17.5, 13.8 20.8, 18 21 C22.2 20.8, 24.5 17.5, 25.2 12.8 C23 13.5, 13 13.5, 10.8 12.8 Z"
-        fill="url(#wineLiquidGrad)"
+        fill="url(#elixirLiquidGrad)"
       />
 
       {/* Liquid Curved Meniscus Surface */}
-      <ellipse cx="18" cy="12.7" rx="7.1" ry="1.6" fill="url(#meniscusGrad)" fillOpacity="0.95" />
+      <ellipse cx="18" cy="12.7" rx="7.1" ry="1.6" fill="url(#elixirMeniscus)" fillOpacity="0.95" />
 
       {/* Glass Top Rim Ellipse */}
       <ellipse cx="18" cy="5.5" rx="7.9" ry="1.5" stroke="#ffffff" strokeWidth="0.8" strokeOpacity="0.75" />
@@ -105,7 +105,7 @@ export const Wine3DIcon: React.FC<Wine3DIconProps> = ({ className = 'w-6 h-6' })
         strokeOpacity="0.55"
       />
 
-      {/* Specular Glint on Wine Surface */}
+      {/* Specular Glint on Elixir Surface */}
       <ellipse cx="15.2" cy="12.6" rx="1.5" ry="0.65" fill="#ffffff" fillOpacity="0.85" />
     </svg>
   );

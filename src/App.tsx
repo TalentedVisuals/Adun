@@ -10,6 +10,7 @@ import { LocationDetails } from './components/LocationDetails';
 import { Footer } from './components/Footer';
 import { ReservationModal } from './components/ReservationModal';
 import { DishDetailModal } from './components/DishDetailModal';
+import { DynamicScrollButton } from './components/DynamicScrollButton';
 import { Currency, MenuItem } from './types';
 
 export default function App() {
@@ -106,6 +107,9 @@ export default function App() {
 
       {/* Footer */}
       <Footer isLightMode={isLightMode} />
+
+      {/* Dynamic Floating Scroll to Bottom / Top Controller */}
+      <DynamicScrollButton isLightMode={isLightMode} />
 
       {/* Interactive Reservation Flow */}
       <ReservationModal

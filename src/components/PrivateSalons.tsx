@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Check, MessageCircle } from 'lucide-react';
 import { PRIVATE_SALONS, formatPrice } from '../data/restaurantData';
 import { Currency } from '../types';
-import { Wine3DIcon } from './Wine3DIcon';
+import { BotanicalChaliceIcon } from './BotanicalChaliceIcon';
 
 interface PrivateSalonsProps {
   currency: Currency;
@@ -17,16 +17,16 @@ export const PrivateSalons: React.FC<PrivateSalonsProps> = ({
 }) => {
   const [selectedSalonId, setSelectedSalonId] = useState('salon-oba');
   const [guestCount, setGuestCount] = useState(14);
-  const [includeWinePairing, setIncludeWinePairing] = useState(true);
+  const [includeElixirPairing, setIncludeElixirPairing] = useState(true);
 
   const selectedSalon = PRIVATE_SALONS.find((s) => s.id === selectedSalonId) || PRIVATE_SALONS[0];
 
-  // Calculate estimated spend based on guest count and wine pairing
+  // Calculate estimated spend based on guest count and zero-proof elixir pairing
   const basePerGuest = selectedSalon.id === 'terrace-skyline' ? 60000 : 95000;
-  const wineAddonPerGuest = includeWinePairing ? 45000 : 0;
+  const elixirAddonPerGuest = includeElixirPairing ? 45000 : 0;
   const calculatedTotalNGN = Math.max(
     selectedSalon.minSpendNGN,
-    guestCount * (basePerGuest + wineAddonPerGuest)
+    guestCount * (basePerGuest + elixirAddonPerGuest)
   );
 
   return (
@@ -164,7 +164,7 @@ export const PrivateSalons: React.FC<PrivateSalonsProps> = ({
                   Configure Your Private Feast: {selectedSalon.name}
                 </h3>
                 <p className="text-xs opacity-70 mt-1 font-light">
-                  Adjust guest numbers and sommelier wine pairings to preview minimum food & beverage spend.
+                  Adjust guest numbers and artisanal botanical pairings to preview minimum food & beverage spend.
                 </p>
               </div>
 
@@ -186,30 +186,30 @@ export const PrivateSalons: React.FC<PrivateSalonsProps> = ({
                 />
               </div>
 
-              {/* Wine Pairing Toggle */}
+              {/* Botanical Elixir Pairing Toggle */}
               <div className="flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl border border-white/10 min-w-0">
                 <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <Wine3DIcon className="w-7 h-7 shrink-0" />
+                  <BotanicalChaliceIcon className="w-7 h-7 shrink-0" />
                   <div className="min-w-0 flex-1">
                     <span className="text-xs uppercase tracking-wider font-semibold block leading-snug">
-                      Sommelier Reserve Wine Flight
+                      Artisanal Botanical Elixir Flight (100% Halal)
                     </span>
                     <span className="text-[10px] sm:text-[11px] opacity-60 block leading-tight mt-0.5">
-                      Hand-curated vintage pour for each course (Grand Cru & Old Vines)
+                      Hand-curated zero-proof virgin cordial or rare cold-pressed infusion for each course
                     </span>
                   </div>
                 </div>
                 <button
                   type="button"
-                  onClick={() => setIncludeWinePairing(!includeWinePairing)}
+                  onClick={() => setIncludeElixirPairing(!includeElixirPairing)}
                   className={`w-12 h-6 rounded-full transition-colors relative shrink-0 ${
-                    includeWinePairing ? 'bg-[#cba358]' : 'bg-white/20'
+                    includeElixirPairing ? 'bg-[#cba358]' : 'bg-white/20'
                   }`}
-                  aria-label="Toggle Sommelier Reserve Wine Flight"
+                  aria-label="Toggle Artisanal Botanical Elixir Flight"
                 >
                   <span
                     className={`block w-4 h-4 rounded-full bg-[#080706] transition-transform ${
-                      includeWinePairing ? 'translate-x-7' : 'translate-x-1'
+                      includeElixirPairing ? 'translate-x-7' : 'translate-x-1'
                     }`}
                   />
                 </button>
@@ -230,7 +230,7 @@ export const PrivateSalons: React.FC<PrivateSalonsProps> = ({
                   {formatPrice(calculatedTotalNGN, currency)}
                 </div>
                 <p className="text-[11px] opacity-60 leading-relaxed font-light mb-6">
-                  Inclusive of bespoke personalized printed menu cards, dedicated executive butler, and private sommelier service.
+                  Inclusive of bespoke personalized printed menu cards, dedicated executive butler, and private master elixir specialist service (100% Halal).
                 </p>
               </div>
 
@@ -244,7 +244,7 @@ export const PrivateSalons: React.FC<PrivateSalonsProps> = ({
 
                 <a
                   href={`https://wa.me/2348135475432?text=${encodeURIComponent(
-                    `Hello Àdùn VIP Concierge, I would like to inquire about reserving ${selectedSalon.name} for ${guestCount} guests on an upcoming date.`
+                    `Hello Adùn VIP Concierge, I would like to inquire about reserving ${selectedSalon.name} for ${guestCount} guests on an upcoming date.`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"

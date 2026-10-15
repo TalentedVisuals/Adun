@@ -6,7 +6,7 @@ export interface CurrencyConfig {
   rate: number; // 1 USD = rate
 }
 
-export type MenuCategory = 'tasting' | 'alacarte' | 'cocktails' | 'dessert';
+export type MenuCategory = 'tasting' | 'alacarte' | 'elixirs' | 'dessert';
 
 export type DietaryTag = 'gluten-free' | 'pescatarian' | 'dairy-free' | 'woodfire' | 'signature';
 
