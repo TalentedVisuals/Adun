@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
-import { ArrowRight, Calendar, Compass, Clock, ChevronLeft, ChevronRight, MoveHorizontal } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { ImageWithFallback } from './ImageWithFallback';
 import { ThreeDLocationIcon } from './ThreeDLocationIcon';
 import { Currency } from '../types';
@@ -148,37 +148,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
 
         {/* Dynamic Rotating Master Headline with Mobile Swipe & Desktop Drag */}
         <div
-          className="relative max-w-4xl mx-auto mb-4 min-h-[160px] sm:min-h-[200px] md:min-h-[220px] flex flex-col justify-center px-2 sm:px-8"
+          className="relative max-w-4xl mx-auto mb-4 min-h-[160px] sm:min-h-[200px] md:min-h-[220px] flex flex-col justify-center px-2 sm:px-6"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Subtle Side Chevrons on Medium+ screens */}
-          <button
-            type="button"
-            onClick={goToPrev}
-            aria-label="Previous headline variation"
-            className={`hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full items-center justify-center border transition-all duration-300 ${
-              isLightMode
-                ? 'bg-white/80 border-[#1a1715]/10 text-[#1a1715]/70 hover:text-[#1a1715] hover:bg-white shadow-sm'
-                : 'bg-[#11100e]/80 border-white/10 text-white/70 hover:text-white hover:bg-[#11100e] hover:border-[#cba358]/50 shadow-md'
-            }`}
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-
-          <button
-            type="button"
-            onClick={goToNext}
-            aria-label="Next headline variation"
-            className={`hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full items-center justify-center border transition-all duration-300 ${
-              isLightMode
-                ? 'bg-white/80 border-[#1a1715]/10 text-[#1a1715]/70 hover:text-[#1a1715] hover:bg-white shadow-sm'
-                : 'bg-[#11100e]/80 border-white/10 text-white/70 hover:text-white hover:bg-[#11100e] hover:border-[#cba358]/50 shadow-md'
-            }`}
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-
           {/* Swipeable & Draggable Headline Container */}
           <div className="overflow-hidden touch-pan-y">
             <AnimatePresence mode="wait" custom={direction}>
@@ -235,69 +208,29 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
           </div>
         </div>
 
-        {/* Quiet Elegance Variation Progress Indicator with Touch-Friendly Controls */}
-        <div className="flex flex-col items-center justify-center mb-8">
-          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
-            {/* Mobile / Compact Previous Button */}
+        {/* Quiet Elegance Variation Progress Indicator */}
+        <div className="flex items-center justify-center gap-1 mb-8">
+          {HERO_VARIATIONS.map((v, idx) => (
             <button
-              type="button"
-              onClick={goToPrev}
-              className={`p-2.5 rounded-full transition-colors flex items-center justify-center ${
-                isLightMode
-                  ? 'text-[#1a1715]/60 hover:text-[#1a1715] hover:bg-[#1a1715]/5'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
-              }`}
-              aria-label="Previous variation"
-              title="Previous"
+              key={v.id}
+              onClick={() => goToIndex(idx)}
+              className="py-3 px-1.5 cursor-pointer focus:outline-none flex items-center justify-center"
+              aria-label={`Show variation ${idx + 1}`}
+              title={`Variation ${idx + 1}: ${v.leadingText}${v.highlightedText}`}
             >
-              <ChevronLeft className="w-4 h-4" />
+              <div
+                className={`h-1 rounded-full transition-all duration-500 ${
+                  currentVariation === idx
+                    ? isLightMode
+                      ? 'w-8 bg-[#875f1b]'
+                      : 'w-8 bg-[#cba358]'
+                    : isLightMode
+                    ? 'w-2.5 bg-[#1a1715]/20 hover:bg-[#1a1715]/40'
+                    : 'w-2.5 bg-white/20 hover:bg-white/40'
+                }`}
+              />
             </button>
-
-            {/* Pagination Indicators with generous mobile hit area */}
-            <div className="flex items-center gap-1">
-              {HERO_VARIATIONS.map((v, idx) => (
-                <button
-                  key={v.id}
-                  onClick={() => goToIndex(idx)}
-                  className="py-3 px-1.5 cursor-pointer focus:outline-none flex items-center justify-center"
-                  aria-label={`Show variation ${idx + 1}`}
-                  title={`Variation ${idx + 1}: ${v.leadingText}${v.highlightedText}`}
-                >
-                  <div
-                    className={`h-1 rounded-full transition-all duration-500 ${
-                      currentVariation === idx
-                        ? isLightMode
-                          ? 'w-8 bg-[#875f1b]'
-                          : 'w-8 bg-[#cba358]'
-                        : isLightMode
-                        ? 'w-2.5 bg-[#1a1715]/20 hover:bg-[#1a1715]/40'
-                        : 'w-2.5 bg-white/20 hover:bg-white/40'
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
-
-            {/* Mobile / Compact Next Button */}
-            <button
-              type="button"
-              onClick={goToNext}
-              className={`p-2.5 rounded-full transition-colors flex items-center justify-center ${
-                isLightMode
-                  ? 'text-[#1a1715]/60 hover:text-[#1a1715] hover:bg-[#1a1715]/5'
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
-              }`}
-              aria-label="Next variation"
-              title="Next"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Micro Swipe Cue for Mobile */}
-          <div className="flex sm:hidden items-center justify-center gap-1.5 text-[10px] tracking-[0.22em] uppercase font-medium opacity-65 mt-1 select-none pointer-events-none">
-            <span className={isLightMode ? 'text-[#875f1b]' : 'text-[#cba358]'}>Swipe to switch story</span>
-          </div>
+          ))}
         </div>
 
         {/* Quick Table Seeker Bar */}
