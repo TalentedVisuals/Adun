@@ -48,4 +48,5 @@ export interface ReservationData {
   guestEmail: string;
   notes: string;
   createdAt: string;
+  confirmationChannel?: 'whatsapp' | 'email' | 'both';
 }

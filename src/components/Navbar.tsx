@@ -33,11 +33,11 @@ export const Navbar: React.FC<NavbarProps> = ({
       className={`sticky top-0 z-40 w-full transition-all duration-300 border-b ${
         isScrolled
           ? isLightMode
-            ? 'bg-[#f7f4ee]/95 backdrop-blur-md border-[#080706]/10 shadow-sm'
-            : 'bg-[#080706]/92 backdrop-blur-md border-white/10 shadow-2xl'
+            ? 'bg-[#EDE0CE]/95 backdrop-blur-md border-[#1C1410]/10 shadow-sm'
+            : 'bg-[#1C1410]/95 backdrop-blur-md border-[#EDE0CE]/10 shadow-2xl'
           : isLightMode
-          ? 'bg-[#f7f4ee] border-[#080706]/5'
-          : 'bg-[#080706] border-white/5'
+          ? 'bg-[#EDE0CE] border-[#1C1410]/5'
+          : 'bg-[#1C1410] border-[#EDE0CE]/5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 w-full flex items-center justify-between gap-2 sm:gap-4 lg:gap-6">
@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <a
           href="#"
           className={`font-serif-luxury text-2xl sm:text-3xl xl:text-3xl tracking-[0.12em] font-medium whitespace-nowrap shrink-0 transition-colors ${
-            isLightMode ? 'text-[#1a1715] hover:text-[#9e7528]' : 'text-[#f5ede0] hover:text-[#cba358]'
+            isLightMode ? 'text-[#1C1410] hover:text-[#8C3B1E]' : 'text-[#EDE0CE] hover:text-[#B8894A]'
           }`}
         >
           Adùn
@@ -57,7 +57,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="#philosophy"
             className={`transition-colors py-1 ${
-              isLightMode ? 'text-[#1a1715]/75 hover:text-[#9e7528]' : 'text-[#e8ded1]/75 hover:text-[#cba358]'
+              isLightMode ? 'text-[#1C1410]/75 hover:text-[#8C3B1E]' : 'text-[#EDE0CE]/75 hover:text-[#B8894A]'
             }`}
           >
             Philosophy
@@ -65,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="#tasting-menu"
             className={`transition-colors py-1 ${
-              isLightMode ? 'text-[#1a1715]/75 hover:text-[#9e7528]' : 'text-[#e8ded1]/75 hover:text-[#cba358]'
+              isLightMode ? 'text-[#1C1410]/75 hover:text-[#8C3B1E]' : 'text-[#EDE0CE]/75 hover:text-[#B8894A]'
             }`}
           >
             Tasting Menu
@@ -73,7 +73,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="#mixology"
             className={`transition-colors py-1 ${
-              isLightMode ? 'text-[#1a1715]/75 hover:text-[#9e7528]' : 'text-[#e8ded1]/75 hover:text-[#cba358]'
+              isLightMode ? 'text-[#1C1410]/75 hover:text-[#8C3B1E]' : 'text-[#EDE0CE]/75 hover:text-[#B8894A]'
             }`}
           >
             Mixology
@@ -81,7 +81,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="#private-salons"
             className={`transition-colors py-1 ${
-              isLightMode ? 'text-[#1a1715]/75 hover:text-[#9e7528]' : 'text-[#e8ded1]/75 hover:text-[#cba358]'
+              isLightMode ? 'text-[#1C1410]/75 hover:text-[#8C3B1E]' : 'text-[#EDE0CE]/75 hover:text-[#B8894A]'
             }`}
           >
             Salons
@@ -89,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="#atmosphere"
             className={`transition-colors py-1 ${
-              isLightMode ? 'text-[#1a1715]/75 hover:text-[#9e7528]' : 'text-[#e8ded1]/75 hover:text-[#cba358]'
+              isLightMode ? 'text-[#1C1410]/75 hover:text-[#8C3B1E]' : 'text-[#EDE0CE]/75 hover:text-[#B8894A]'
             }`}
           >
             Atmosphere
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="#location"
             className={`transition-colors py-1 ${
-              isLightMode ? 'text-[#1a1715]/75 hover:text-[#9e7528]' : 'text-[#e8ded1]/75 hover:text-[#cba358]'
+              isLightMode ? 'text-[#1C1410]/75 hover:text-[#8C3B1E]' : 'text-[#EDE0CE]/75 hover:text-[#B8894A]'
             }`}
           >
             Location
@@ -110,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Currency Toggle: Naira & Dollar Only (Shown on Tablet & Desktop) */}
           <div
             className={`hidden md:flex items-center rounded-full border p-0.5 text-[9px] xl:text-[10px] font-tabular tracking-wider transition-colors shrink-0 ${
-              isLightMode ? 'border-[#1a1715]/15 bg-white/70' : 'border-white/15 bg-[#171513]/80'
+              isLightMode ? 'border-[#1C1410]/15 bg-[#FAF6EF]' : 'border-[#EDE0CE]/15 bg-[#251C17]'
             }`}
           >
             {(['NGN', 'USD'] as Currency[]).map((c) => (
@@ -120,11 +120,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className={`px-2 py-0.5 rounded-full transition-all duration-200 font-semibold ${
                   currency === c
                     ? isLightMode
-                      ? 'bg-[#1a1715] text-[#f7f4ee] shadow-sm'
-                      : 'bg-[#cba358] text-[#080706] shadow-sm'
+                      ? 'bg-[#1C1410] text-[#EDE0CE] shadow-sm'
+                      : 'bg-[#B8894A] text-[#1C1410] shadow-sm'
                     : isLightMode
-                    ? 'text-[#1a1715]/60 hover:text-[#1a1715]'
-                    : 'text-[#e8ded1]/60 hover:text-[#e8ded1]'
+                    ? 'text-[#1C1410]/60 hover:text-[#1C1410]'
+                    : 'text-[#EDE0CE]/60 hover:text-[#EDE0CE]'
                 }`}
                 title={`Switch currency to ${c === 'NGN' ? 'Nigerian Naira (₦)' : 'US Dollar ($)'}`}
               >
@@ -138,11 +138,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={onToggleTheme}
             className={`hidden sm:flex p-1.5 rounded-full border transition-colors shrink-0 ${
               isLightMode
-                ? 'border-[#080706]/15 text-[#1a1715] hover:bg-[#080706]/5'
-                : 'border-white/15 text-[#e8ded1] hover:bg-white/5'
+                ? 'border-[#1C1410]/15 text-[#1C1410] hover:bg-[#1C1410]/5'
+                : 'border-[#EDE0CE]/15 text-[#EDE0CE] hover:bg-white/5'
             }`}
             aria-label="Toggle dark/light ambiance"
-            title={isLightMode ? 'Switch to Obsidian Nocturne' : 'Switch to Travertine Day'}
+            title={isLightMode ? 'Switch to Espresso Nocturne' : 'Switch to Cream Day'}
           >
             {isLightMode ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5" />}
           </button>
@@ -150,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Primary CTA: "Reserve Table" (Scaled cleanly across mobile, tablet, desktop) */}
           <button
             onClick={() => onOpenBooking()}
-            className="group px-3.5 sm:px-4 xl:px-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#cba358] to-[#ab8235] text-[#080706] text-[10px] sm:text-[11px] xl:text-xs tracking-[0.14em] sm:tracking-[0.16em] uppercase font-semibold hover:shadow-lg hover:shadow-[#cba358]/20 transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap shrink-0"
+            className="group px-3.5 sm:px-4 xl:px-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#B8894A] to-[#996F38] text-[#1C1410] text-[10px] sm:text-[11px] xl:text-xs tracking-[0.14em] sm:tracking-[0.16em] uppercase font-bold hover:shadow-lg hover:shadow-[#B8894A]/25 transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap shrink-0"
           >
             <span>Reserve Table</span>
             <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -161,8 +161,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className={`lg:hidden p-1.5 rounded-lg border transition-colors shrink-0 ${
               isLightMode
-                ? 'border-[#1a1715]/10 text-[#1a1715] hover:bg-black/5'
-                : 'border-white/10 text-[#e8ded1] hover:bg-white/5'
+                ? 'border-[#1C1410]/15 text-[#1C1410] hover:bg-[#1C1410]/5'
+                : 'border-[#EDE0CE]/15 text-[#EDE0CE] hover:bg-white/5'
             }`}
             aria-label="Toggle navigation menu"
           >
@@ -176,56 +176,56 @@ export const Navbar: React.FC<NavbarProps> = ({
       {mobileMenuOpen && (
         <div
           className={`lg:hidden border-b px-6 py-6 transition-all ${
-            isLightMode ? 'bg-[#f7f4ee] border-[#080706]/10' : 'bg-[#11100e] border-white/10'
+            isLightMode ? 'bg-[#FAF6EF] border-[#1C1410]/10 text-[#1C1410]' : 'bg-[#251C17] border-[#EDE0CE]/10 text-[#EDE0CE]'
           }`}
         >
           <nav className="flex flex-col space-y-4 text-xs tracking-[0.2em] uppercase font-medium">
             <a
               href="#philosophy"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-inherit hover:text-[#cba358]"
+              className={`py-1 text-inherit transition ${isLightMode ? 'hover:text-[#8C3B1E]' : 'hover:text-[#B8894A]'}`}
             >
               Philosophy
             </a>
             <a
               href="#tasting-menu"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-inherit hover:text-[#cba358]"
+              className={`py-1 text-inherit transition ${isLightMode ? 'hover:text-[#8C3B1E]' : 'hover:text-[#B8894A]'}`}
             >
               Tasting Menu
             </a>
             <a
               href="#mixology"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-inherit hover:text-[#cba358]"
+              className={`py-1 text-inherit transition ${isLightMode ? 'hover:text-[#8C3B1E]' : 'hover:text-[#B8894A]'}`}
             >
               Mixology & Cellar
             </a>
             <a
               href="#private-salons"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-inherit hover:text-[#cba358]"
+              className={`py-1 text-inherit transition ${isLightMode ? 'hover:text-[#8C3B1E]' : 'hover:text-[#B8894A]'}`}
             >
               Private Salons
             </a>
             <a
               href="#atmosphere"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-inherit hover:text-[#cba358]"
+              className={`py-1 text-inherit transition ${isLightMode ? 'hover:text-[#8C3B1E]' : 'hover:text-[#B8894A]'}`}
             >
               Atmosphere & Vinyl
             </a>
             <a
               href="#location"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-inherit hover:text-[#cba358]"
+              className={`py-1 text-inherit transition ${isLightMode ? 'hover:text-[#8C3B1E]' : 'hover:text-[#B8894A]'}`}
             >
               Location & Valet
             </a>
           </nav>
 
           {/* Mobile Drawer Controls: Currency & Ambiance */}
-          <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
+          <div className={`mt-6 pt-5 border-t flex flex-wrap items-center justify-between gap-4 ${isLightMode ? 'border-[#1C1410]/10' : 'border-[#EDE0CE]/10'}`}>
             
             {/* Currency Selector */}
             <div className="flex items-center gap-1.5 text-xs">
@@ -237,9 +237,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className={`px-3 py-1 rounded-full text-xs font-semibold transition ${
                     currency === c
                       ? isLightMode
-                        ? 'bg-[#1a1715] text-[#f7f4ee]'
-                        : 'bg-[#cba358] text-[#080706]'
-                      : 'opacity-70 hover:opacity-100 border border-white/10'
+                        ? 'bg-[#1C1410] text-[#EDE0CE]'
+                        : 'bg-[#B8894A] text-[#1C1410]'
+                      : isLightMode
+                      ? 'opacity-70 hover:opacity-100 border border-[#1C1410]/15'
+                      : 'opacity-70 hover:opacity-100 border border-[#EDE0CE]/15'
                   }`}
                 >
                   {c === 'NGN' ? '₦ NGN' : '$ USD'}
@@ -252,8 +254,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={onToggleTheme}
               className={`flex items-center gap-2 px-3 py-1 rounded-full border text-xs tracking-wider transition ${
                 isLightMode
-                  ? 'border-[#080706]/15 text-[#1a1715]'
-                  : 'border-white/15 text-[#e8ded1]'
+                  ? 'border-[#1C1410]/15 text-[#1C1410]'
+                  : 'border-[#EDE0CE]/15 text-[#EDE0CE]'
               }`}
             >
               {isLightMode ? (
@@ -278,7 +280,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setMobileMenuOpen(false);
                 onOpenBooking();
               }}
-              className="w-full py-3 rounded-full bg-gradient-to-r from-[#cba358] to-[#ab8235] text-[#080706] text-xs tracking-[0.2em] uppercase font-bold text-center shadow-lg"
+              className="w-full py-3 rounded-full bg-gradient-to-r from-[#B8894A] to-[#996F38] text-[#1C1410] text-xs tracking-[0.2em] uppercase font-bold text-center shadow-lg hover:shadow-[#B8894A]/25 transition"
             >
               Reserve Table Now
             </button>

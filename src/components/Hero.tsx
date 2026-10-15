@@ -119,15 +119,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
   return (
     <section className="relative min-h-[92vh] flex flex-col justify-center pt-10 pb-20 px-6 sm:px-8 overflow-hidden">
       
-      {/* Ambient Atmospheric Glow Orbs */}
+      {/* Ambient Atmospheric Glow Orbs with Burnished Brass & Terracotta Hearth Tones */}
       <div
         className={`absolute -top-36 left-1/2 -translate-x-1/2 w-[700px] h-[550px] rounded-full blur-[140px] pointer-events-none transition-opacity duration-700 ${
-          isLightMode ? 'bg-[#cba358]/10' : 'bg-[#cba358]/12'
+          isLightMode ? 'bg-[#B8894A]/10' : 'bg-[#B8894A]/12'
         }`}
       />
       <div
         className={`absolute bottom-10 right-[-120px] w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none transition-opacity duration-700 ${
-          isLightMode ? 'bg-[#b8542c]/5' : 'bg-[#b8542c]/10'
+          isLightMode ? 'bg-[#8C3B1E]/8' : 'bg-[#8C3B1E]/15'
         }`}
       />
 
@@ -141,7 +141,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
           className="flex items-center justify-center gap-2.5 text-xs tracking-[0.28em] uppercase font-medium mb-6 group cursor-pointer"
         >
           <ThreeDLocationIcon size={22} />
-          <span className={`transition-colors font-semibold ${isLightMode ? 'text-[#7a5412] group-hover:text-[#9e7426]' : 'text-[#cba358] group-hover:text-[#e4c47e]'}`}>
+          <span className={`transition-colors font-semibold ${isLightMode ? 'text-[#8C632C] group-hover:text-[#6B4619]' : 'text-[#B8894A] group-hover:text-[#CD9B58]'}`}>
             Victoria Island · Lagos
           </span>
         </motion.div>
@@ -180,7 +180,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
               >
                 <h1
                   className={`font-serif-luxury text-3xl sm:text-5xl md:text-6xl lg:text-[5.25rem] font-normal leading-[1.08] sm:leading-[1.05] tracking-tight mb-4 sm:mb-5 ${
-                    isLightMode ? 'text-[#1a1715]' : 'text-white'
+                    isLightMode ? 'text-[#1C1410]' : 'text-[#EDE0CE]'
                   }`}
                   style={{ textWrap: 'balance' }}
                 >
@@ -198,7 +198,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
                 </h1>
                 <p
                   className={`text-xs sm:text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed pointer-events-none ${
-                    isLightMode ? 'text-[#1a1715]/80' : 'text-[#e8ded1]/75'
+                    isLightMode ? 'text-[#1C1410]/80' : 'text-[#EDE0CE]/80'
                   }`}
                 >
                   {activeVariation.subheadline}
@@ -222,11 +222,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
                 className={`h-1 rounded-full transition-all duration-500 ${
                   currentVariation === idx
                     ? isLightMode
-                      ? 'w-8 bg-[#875f1b]'
-                      : 'w-8 bg-[#cba358]'
+                      ? 'w-8 bg-[#8C632C]'
+                      : 'w-8 bg-[#B8894A]'
                     : isLightMode
-                    ? 'w-2.5 bg-[#1a1715]/20 hover:bg-[#1a1715]/40'
-                    : 'w-2.5 bg-white/20 hover:bg-white/40'
+                    ? 'w-2.5 bg-[#1C1410]/20 hover:bg-[#1C1410]/40'
+                    : 'w-2.5 bg-[#EDE0CE]/20 hover:bg-[#EDE0CE]/40'
                 }`}
               />
             </button>
@@ -240,8 +240,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
           transition={{ duration: 0.8, delay: 0.25 }}
           className={`max-w-4xl mx-auto p-3 sm:p-4 rounded-2xl border backdrop-blur-md mb-12 shadow-2xl talkbox-interactive ${
             isLightMode
-              ? 'bg-[#ffffff]/90 border-[#1a1715]/10'
-              : 'bg-[#11100e]/90 border-white/10 gold-border-glow'
+              ? 'bg-[#FAF6EF]/95 border-[#1C1410]/10 shadow-xl'
+              : 'bg-[#251C17]/90 border-[#EDE0CE]/10 gold-border-glow'
           }`}
         >
           <form onSubmit={handleQuickReserve} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
@@ -250,8 +250,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
             <div
               className={`px-4 py-2.5 rounded-xl border transition-colors ${
                 isLightMode
-                  ? 'bg-[#f7f4ee] border-[#1a1715]/10 hover:border-[#cba358]'
-                  : 'bg-[#080706]/70 border-white/5 hover:border-[#cba358]/40'
+                  ? 'bg-[#EDE0CE]/50 border-[#1C1410]/10 hover:border-[#B8894A]'
+                  : 'bg-[#1C1410]/80 border-[#EDE0CE]/10 hover:border-[#B8894A]/50'
               }`}
             >
               <label className="block text-[10px] tracking-widest uppercase opacity-60 font-medium">Seating Salon</label>
@@ -260,10 +260,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
                 onChange={(e) => setSelectedArea(e.target.value)}
                 className="w-full bg-transparent text-xs sm:text-sm font-medium focus:outline-none cursor-pointer mt-0.5 text-inherit"
               >
-                <option value="Chef's Table" className="bg-[#11100e] text-[#e8ded1]">Chef’s Table (Front Row)</option>
-                <option value="Main Dining Salon" className="bg-[#11100e] text-[#e8ded1]">Main Obsidian Salon</option>
-                <option value="Sunset Terrace Lounge" className="bg-[#11100e] text-[#e8ded1]">Sunset Rooftop Lounge</option>
-                <option value="Salon Ọba (Private)" className="bg-[#11100e] text-[#e8ded1]">Salon Ọba (Private 12-16)</option>
+                <option value="Chef's Table" className="bg-[#251C17] text-[#EDE0CE]">Chef’s Table (Front Row)</option>
+                <option value="Main Dining Salon" className="bg-[#251C17] text-[#EDE0CE]">Main Obsidian Salon</option>
+                <option value="Sunset Terrace Lounge" className="bg-[#251C17] text-[#EDE0CE]">Sunset Rooftop Lounge</option>
+                <option value="Salon Ọba (Private)" className="bg-[#251C17] text-[#EDE0CE]">Salon Ọba (Private 12-16)</option>
               </select>
             </div>
 
@@ -271,8 +271,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
             <div
               className={`px-4 py-2.5 rounded-xl border transition-colors ${
                 isLightMode
-                  ? 'bg-[#f7f4ee] border-[#1a1715]/10 hover:border-[#cba358]'
-                  : 'bg-[#080706]/70 border-white/5 hover:border-[#cba358]/40'
+                  ? 'bg-[#EDE0CE]/50 border-[#1C1410]/10 hover:border-[#B8894A]'
+                  : 'bg-[#1C1410]/80 border-[#EDE0CE]/10 hover:border-[#B8894A]/50'
               }`}
             >
               <label className="block text-[10px] tracking-widest uppercase opacity-60 font-medium">Date</label>
@@ -288,8 +288,8 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
             <div
               className={`px-4 py-2.5 rounded-xl border transition-colors ${
                 isLightMode
-                  ? 'bg-[#f7f4ee] border-[#1a1715]/10 hover:border-[#cba358]'
-                  : 'bg-[#080706]/70 border-white/5 hover:border-[#cba358]/40'
+                  ? 'bg-[#EDE0CE]/50 border-[#1C1410]/10 hover:border-[#B8894A]'
+                  : 'bg-[#1C1410]/80 border-[#EDE0CE]/10 hover:border-[#B8894A]/50'
               }`}
             >
               <label className="block text-[10px] tracking-widest uppercase opacity-60 font-medium">Party Size</label>
@@ -298,17 +298,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
                 onChange={(e) => setSelectedGuests(e.target.value)}
                 className="w-full bg-transparent text-xs sm:text-sm font-medium focus:outline-none cursor-pointer mt-0.5 text-inherit"
               >
-                <option value="2 Guests" className="bg-[#11100e] text-[#e8ded1]">2 Guests (Intimate Table)</option>
-                <option value="4 Guests" className="bg-[#11100e] text-[#e8ded1]">4 Guests (Social Table)</option>
-                <option value="6 Guests" className="bg-[#11100e] text-[#e8ded1]">6 Guests (Celebration)</option>
-                <option value="8+ Guests (VIP)" className="bg-[#11100e] text-[#e8ded1]">8+ Guests (Salon Request)</option>
+                <option value="2 Guests" className="bg-[#251C17] text-[#EDE0CE]">2 Guests (Intimate Table)</option>
+                <option value="4 Guests" className="bg-[#251C17] text-[#EDE0CE]">4 Guests (Social Table)</option>
+                <option value="6 Guests" className="bg-[#251C17] text-[#EDE0CE]">6 Guests (Celebration)</option>
+                <option value="8+ Guests (VIP)" className="bg-[#251C17] text-[#EDE0CE]">8+ Guests (Salon Request)</option>
               </select>
             </div>
 
             {/* Check Button */}
             <button
               type="submit"
-              className="w-full h-full min-h-[48px] rounded-xl bg-[#cba358] hover:bg-[#e4c47e] text-[#080706] font-semibold text-xs tracking-[0.2em] uppercase transition flex items-center justify-center gap-2"
+              className="w-full h-full min-h-[48px] rounded-xl bg-[#B8894A] hover:bg-[#CD9B58] text-[#1C1410] font-bold text-xs tracking-[0.2em] uppercase transition flex items-center justify-center gap-2 shadow-md hover:shadow-[#B8894A]/25"
             >
               <span>Find Table</span>
               <Calendar className="w-4 h-4" />
@@ -324,7 +324,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
           {/* Main Visual Card */}
           <div
             onClick={() => onOpenBooking("Chef's Table")}
-            className="md:col-span-7 relative group rounded-2xl overflow-hidden min-h-[340px] sm:min-h-[460px] border border-white/10 shadow-2xl card-interactive cursor-pointer"
+            className="md:col-span-7 relative group rounded-2xl overflow-hidden min-h-[340px] sm:min-h-[460px] border border-[#EDE0CE]/10 shadow-2xl card-interactive cursor-pointer"
           >
             <motion.div style={{ scale: scaleParallax }} className="w-full h-full">
               <ImageWithFallback
@@ -335,20 +335,20 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
               />
             </motion.div>
             
-            <div className="absolute inset-0 bg-gradient-to-t from-[#080706] via-[#080706]/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1C1410] via-[#1C1410]/60 to-transparent" />
 
             <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex flex-col sm:flex-row sm:items-end justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#cba358] font-medium block mb-1">
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-[#B8894A] font-semibold block mb-1">
                   The Signature 9-Course Journey
                 </span>
-                <h2 className="font-serif-luxury text-xl sm:text-2xl md:text-3xl text-white font-normal leading-snug">
+                <h2 className="font-serif-luxury text-xl sm:text-2xl md:text-3xl text-[#EDE0CE] font-normal leading-snug">
                   Slow-Roasted Lamb Saddle, Suya Crust & Fermented Locust Jus
                 </h2>
               </div>
               <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center border-t sm:border-t-0 pt-2 sm:pt-0 border-white/15 sm:pl-4 shrink-0">
-                <span className="block text-[11px] sm:text-xs uppercase tracking-widest text-[#e8ded1]/60">Tasting</span>
-                <span className="font-serif-luxury text-xl sm:text-2xl text-[#cba358] font-medium">
+                <span className="block text-[11px] sm:text-xs uppercase tracking-widest text-[#EDE0CE]/70">Tasting</span>
+                <span className="font-serif-luxury text-xl sm:text-2xl text-[#B8894A] font-medium">
                   {formatPrice(85000, currency)}
                 </span>
               </div>
@@ -361,7 +361,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
             {/* Card 1: Rooftop Skyline */}
             <div
               onClick={() => onOpenBooking('Sunset Terrace Lounge')}
-              className="relative group rounded-2xl overflow-hidden min-h-[200px] sm:min-h-[220px] border border-white/10 shadow-lg card-interactive cursor-pointer"
+              className="relative group rounded-2xl overflow-hidden min-h-[200px] sm:min-h-[220px] border border-[#EDE0CE]/10 shadow-lg card-interactive cursor-pointer"
             >
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80"
@@ -369,18 +369,18 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
                 fallbackTitle="ROOFTOP & SKYLINE"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080706] via-[#080706]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1410] via-[#1C1410]/50 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5">
-                <span className="text-[10px] tracking-widest uppercase text-[#cba358] font-medium">4th Floor Skyline</span>
-                <h3 className="font-serif-luxury text-lg sm:text-xl text-white font-medium mt-0.5">Terrace Lounge & Vinyl Parlour</h3>
-                <p className="text-xs text-[#e8ded1]/70 mt-1 line-clamp-1">Zero-proof botanical reductions, virgin spiced elixirs, and highlife-jazz reworks.</p>
+                <span className="text-[10px] tracking-widest uppercase text-[#B8894A] font-semibold">4th Floor Skyline</span>
+                <h3 className="font-serif-luxury text-lg sm:text-xl text-[#EDE0CE] font-medium mt-0.5">Terrace Lounge & Vinyl Parlour</h3>
+                <p className="text-xs text-[#EDE0CE]/75 mt-1 line-clamp-1">Zero-proof botanical reductions, virgin spiced elixirs, and highlife-jazz reworks.</p>
               </div>
             </div>
 
             {/* Card 2: Chef's Hearth Counter */}
             <div
               onClick={() => onOpenBooking("Chef's Table")}
-              className="relative group rounded-2xl overflow-hidden min-h-[200px] sm:min-h-[220px] border border-white/10 shadow-lg card-interactive cursor-pointer"
+              className="relative group rounded-2xl overflow-hidden min-h-[200px] sm:min-h-[220px] border border-[#EDE0CE]/10 shadow-lg card-interactive cursor-pointer"
             >
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1000&q=80"
@@ -388,19 +388,19 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
                 fallbackTitle="THE HEARTH FIRE COUNTER"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#080706] via-[#080706]/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1C1410] via-[#1C1410]/50 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-2.5">
                 <div className="min-w-0">
-                  <span className="text-[10px] tracking-widest uppercase text-emerald-400 font-medium">10 Seats · Single Seating</span>
-                  <h3 className="font-serif-luxury text-lg sm:text-xl text-white font-medium mt-0.5">The Fire Counter</h3>
-                  <p className="text-xs text-[#e8ded1]/70 mt-0.5 line-clamp-1 sm:line-clamp-none">Direct culinary choreography with Chef Tunde Adeleke.</p>
+                  <span className="text-[10px] tracking-widest uppercase text-[#8C3B1E] font-semibold bg-[#8C3B1E]/20 px-2 py-0.5 rounded-full inline-block mb-1 border border-[#8C3B1E]/30">10 Seats · Single Seating</span>
+                  <h3 className="font-serif-luxury text-lg sm:text-xl text-[#EDE0CE] font-medium mt-0.5">The Fire Counter</h3>
+                  <p className="text-xs text-[#EDE0CE]/75 mt-0.5 line-clamp-1 sm:line-clamp-none">Direct culinary choreography with Chef Tunde Adeleke.</p>
                 </div>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     onOpenBooking("Chef's Table");
                   }}
-                  className="w-full sm:w-auto px-4 py-1.5 rounded-lg bg-white/10 hover:bg-[#cba358] hover:text-[#080706] text-xs font-medium transition text-white border border-white/20 shrink-0 text-center"
+                  className="w-full sm:w-auto px-4 py-1.5 rounded-lg bg-white/10 hover:bg-[#B8894A] hover:text-[#1C1410] text-xs font-semibold transition text-[#EDE0CE] border border-white/20 shrink-0 text-center"
                 >
                   Book
                 </button>

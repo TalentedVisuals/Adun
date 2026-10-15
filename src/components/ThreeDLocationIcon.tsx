@@ -38,7 +38,7 @@ export const ThreeDLocationIcon: React.FC<ThreeDLocationIconProps> = ({
           width: size,
           height: height,
         }}
-        className="relative flex items-center justify-center filter drop-shadow-[0_4px_10px_rgba(203,163,88,0.4)]"
+        className="relative flex items-center justify-center filter drop-shadow-[0_4px_10px_rgba(184,137,74,0.45)]"
       >
         <svg
           width={size}
@@ -49,41 +49,41 @@ export const ThreeDLocationIcon: React.FC<ThreeDLocationIconProps> = ({
           className="overflow-visible"
         >
           <defs>
-            {/* 3D Metallic Gold Gradient for Pin */}
+            {/* 3D Metallic Burnished Brass Gradient for Pin */}
             <linearGradient id="pinBody3D" x1="4" y1="2" x2="28" y2="38" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#fff4dc" />
-              <stop offset="25%" stopColor="#ebd085" />
-              <stop offset="55%" stopColor="#cba358" />
-              <stop offset="85%" stopColor="#87621a" />
-              <stop offset="100%" stopColor="#48330a" />
+              <stop offset="0%" stopColor="#EDE0CE" />
+              <stop offset="25%" stopColor="#CD9B58" />
+              <stop offset="55%" stopColor="#B8894A" />
+              <stop offset="85%" stopColor="#8C632C" />
+              <stop offset="100%" stopColor="#1C1410" />
             </linearGradient>
 
             {/* Specular Edge Highlight */}
             <linearGradient id="rimSpecular" x1="6" y1="3" x2="26" y2="30" gradientUnits="userSpaceOnUse">
               <stop offset="0%" stopColor="#ffffff" stopOpacity="0.85" />
-              <stop offset="45%" stopColor="#cba358" stopOpacity="0" />
-              <stop offset="100%" stopColor="#221805" stopOpacity="0.65" />
+              <stop offset="45%" stopColor="#B8894A" stopOpacity="0" />
+              <stop offset="100%" stopColor="#1C1410" stopOpacity="0.65" />
             </linearGradient>
 
-            {/* Deep Obsidian Core Eye */}
+            {/* Deep Espresso Core Eye with Terracotta Accent */}
             <radialGradient id="recessedCore" cx="16" cy="15" r="7" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#080706" />
-              <stop offset="70%" stopColor="#171513" />
-              <stop offset="100%" stopColor="#45381f" />
+              <stop offset="0%" stopColor="#1C1410" />
+              <stop offset="70%" stopColor="#251C17" />
+              <stop offset="100%" stopColor="#8C3B1E" />
             </radialGradient>
 
-            {/* Radiant Center Jewel */}
+            {/* Radiant Burnished Brass Jewel */}
             <radialGradient id="centerJewel" cx="15.2" cy="14.2" r="3.5" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="35%" stopColor="#fae5aa" />
-              <stop offset="75%" stopColor="#cba358" />
-              <stop offset="100%" stopColor="#6e4c0d" />
+              <stop offset="0%" stopColor="#FAF6EF" />
+              <stop offset="35%" stopColor="#CD9B58" />
+              <stop offset="75%" stopColor="#B8894A" />
+              <stop offset="100%" stopColor="#8C3B1E" />
             </radialGradient>
 
             {/* Ground Contact Shadow */}
             <radialGradient id="groundShadow" cx="16" cy="38" r="7.5" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#000000" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+              <stop offset="0%" stopColor="#1C1410" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#1C1410" stopOpacity="0" />
             </radialGradient>
           </defs>
 
@@ -94,7 +94,7 @@ export const ThreeDLocationIcon: React.FC<ThreeDLocationIconProps> = ({
           <path
             d="M16 1C8.268 1 2 7.268 2 15C2 24.5 14.2 36.8 15.2 37.8C15.65 38.25 16.35 38.25 16.8 37.8C17.8 36.8 30 24.5 30 15C30 7.268 23.732 1 16 1Z"
             fill="url(#pinBody3D)"
-            stroke="#543e12"
+            stroke="#8C632C"
             strokeWidth="0.7"
           />
 
@@ -107,7 +107,7 @@ export const ThreeDLocationIcon: React.FC<ThreeDLocationIconProps> = ({
           />
 
           {/* Recessed Center Ring */}
-          <circle cx="16" cy="15" r="6.8" fill="url(#recessedCore)" stroke="#cba358" strokeWidth="0.8" />
+          <circle cx="16" cy="15" r="6.8" fill="url(#recessedCore)" stroke="#B8894A" strokeWidth="0.8" />
 
           {/* Inner Golden Sphere */}
           <circle cx="16" cy="15" r="3.2" fill="url(#centerJewel)" />

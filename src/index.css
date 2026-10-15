@@ -1,5 +1,28 @@
 @import "tailwindcss";
 
+@theme {
+  --color-espresso: #1C1410;
+  --color-espresso-dark: #140E0B;
+  --color-espresso-surface: #251C17;
+  --color-espresso-elevated: #2E221D;
+  --color-espresso-border: #3D2E26;
+
+  --color-brass: #B8894A;
+  --color-brass-light: #CD9B58;
+  --color-brass-dark: #8C632C;
+  --color-brass-deep: #6B4619;
+
+  --color-terracotta: #8C3B1E;
+  --color-terracotta-light: #A84D29;
+  --color-terracotta-dark: #6E2C14;
+
+  --color-cream: #EDE0CE;
+  --color-cream-light: #FAF6EF;
+  --color-cream-surface: #F7F2E9;
+  --color-cream-dark: #DFCDB7;
+  --color-cream-muted: #C8B59E;
+}
+
 @layer base {
   :root {
     --font-serif: "Fraunces", Georgia, serif;
@@ -36,29 +59,33 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Luxury Gold and Amber Gradients */
+/* Burnished Brass & Cream Gradients */
 .gold-gradient-text {
-  background: linear-gradient(135deg, #f7ecd5 0%, #cba358 50%, #9e7528 100%);
+  background: linear-gradient(135deg, #EDE0CE 0%, #B8894A 55%, #8C632C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Rich Burnished Antique Gold for Light Backgrounds (High Contrast >= 7:1) */
+/* Rich Burnished Brass for Light Cream Backgrounds (High Contrast >= 7:1) */
 .gold-gradient-text-light {
-  background: linear-gradient(135deg, #6c470a 0%, #94691b 50%, #523507 100%);
+  background: linear-gradient(135deg, #5C3A12 0%, #8C632C 50%, #402609 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Light Theme Automatic Contrast Adaptor */
 .light-theme .gold-gradient-text {
-  background: linear-gradient(135deg, #6c470a 0%, #94691b 50%, #523507 100%);
+  background: linear-gradient(135deg, #5C3A12 0%, #8C632C 50%, #402609 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gold-border-glow {
-  box-shadow: 0 0 35px -8px rgba(203, 163, 88, 0.22);
+  box-shadow: 0 0 35px -8px rgba(184, 137, 74, 0.28);
+}
+
+.terracotta-glow {
+  box-shadow: 0 0 30px -8px rgba(140, 59, 30, 0.35);
 }
 
 /* Interactive Card Zoom & Haptic Shake Animations - Guarded for desktop pointer hover */
@@ -75,7 +102,7 @@
   60% {
     transform: translateY(-4px) scale(1.02) rotate(-0.2deg);
   }
-  80% {
+  70% {
     transform: translateY(-4px) scale(1.02) rotate(0.1deg);
   }
   100% {
@@ -94,8 +121,8 @@
 @media (hover: hover) and (pointer: fine) {
   .card-interactive:hover {
     animation: haptic-hover 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    box-shadow: 0 16px 36px -10px rgba(203, 163, 88, 0.28);
-    border-color: rgba(203, 163, 88, 0.5) !important;
+    box-shadow: 0 16px 36px -10px rgba(184, 137, 74, 0.25);
+    border-color: rgba(184, 137, 74, 0.5) !important;
   }
 }
 
@@ -133,8 +160,8 @@
 @media (hover: hover) and (pointer: fine) {
   .talkbox-interactive:hover {
     animation: haptic-talkbox 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    box-shadow: 0 14px 30px -8px rgba(203, 163, 88, 0.24);
-    border-color: rgba(203, 163, 88, 0.45) !important;
+    box-shadow: 0 14px 30px -8px rgba(184, 137, 74, 0.22);
+    border-color: rgba(184, 137, 74, 0.45) !important;
   }
 }
 
@@ -151,25 +178,25 @@
   scrollbar-width: none;
 }
 
-/* Ambient Grain Texture */
+/* Ambient Grain Texture with burnished brass and espresso warmth */
 .bg-grain {
-  background-image: radial-gradient(rgba(203, 163, 88, 0.035) 1px, transparent 0);
+  background-image: radial-gradient(rgba(184, 137, 74, 0.04) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar styled with espresso and burnished brass */
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #080706;
+  background: #140E0B;
 }
 ::-webkit-scrollbar-thumb {
-  background: #231f1a;
+  background: #2E221D;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #cba358;
+  background: #B8894A;
 }
 
 /* Smooth Image Reveal & Parallax */

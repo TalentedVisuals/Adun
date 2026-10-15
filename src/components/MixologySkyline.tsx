@@ -1,8 +1,9 @@
 import React from 'react';
-import { Sparkles, GlassWater, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { ImageWithFallback } from './ImageWithFallback';
+import { ThreeDApothecaryIcon } from './ThreeDApothecaryIcon';
+import { ThreeDKunuGobletIcon } from './ThreeDKunuGobletIcon';
 import { Currency } from '../types';
-import { formatPrice } from '../data/restaurantData';
 
 interface MixologySkylineProps {
   currency: Currency;
@@ -11,7 +12,6 @@ interface MixologySkylineProps {
 }
 
 export const MixologySkyline: React.FC<MixologySkylineProps> = ({
-  currency,
   isLightMode,
   onOpenBooking,
 }) => {
@@ -22,7 +22,7 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
           
           {/* Left Column: Image Duo with Subtle Parallax Lift */}
           <div className="lg:col-span-6 grid grid-cols-2 gap-3 sm:gap-4">
-            <div className="rounded-2xl overflow-hidden border border-white/10 h-56 sm:h-80 md:h-96 shadow-xl card-interactive cursor-pointer">
+            <div className={`rounded-2xl overflow-hidden border h-56 sm:h-80 md:h-96 shadow-xl card-interactive cursor-pointer ${isLightMode ? 'border-[#1C1410]/10' : 'border-[#EDE0CE]/10'}`}>
               <ImageWithFallback
                 src="https://lh3.googleusercontent.com/pw/AP1GczOT-yXxxSaR3qwJBzAKajwJ5hnDWaZh0UwZjFFWcGwVmze5oYGg9hn8d9-0cHS9l6uvIp3kITtiOfraxxQHuFcvYZIVgJVZeXmNed5TuyIJo9jcPbsDwYDMS9NgXQdgoELkriucb5f4ZMEEAE7LEb77lw=w607-h607-s-no-gm"
                 alt="Adùn Zero-Proof Mixology & Dining Table Craft"
@@ -30,7 +30,7 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
             </div>
-            <div className="rounded-2xl overflow-hidden border border-white/10 h-56 sm:h-80 md:h-96 mt-4 sm:mt-6 shadow-xl card-interactive cursor-pointer">
+            <div className={`rounded-2xl overflow-hidden border h-56 sm:h-80 md:h-96 mt-4 sm:mt-6 shadow-xl card-interactive cursor-pointer ${isLightMode ? 'border-[#1C1410]/10' : 'border-[#EDE0CE]/10'}`}>
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=800&q=80"
                 alt="Artisanal Zero-Proof Elixirs and Woodfire Essence"
@@ -44,10 +44,10 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
           <div className="lg:col-span-6">
             
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs uppercase tracking-[0.25em] text-[#cba358] font-semibold block">
+              <span className="text-xs uppercase tracking-[0.25em] text-[#B8894A] font-semibold block">
                 Zero-Proof Botanical Alchemy
               </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] tracking-wider uppercase font-semibold bg-[#cba358]/15 text-[#cba358] border border-[#cba358]/30">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] tracking-wider uppercase font-semibold bg-[#8C3B1E]/15 text-[#8C3B1E] border border-[#8C3B1E]/30">
                 <ShieldCheck className="w-3 h-3" />
                 100% Halal
               </span>
@@ -55,7 +55,7 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
             
             <h2
               className={`font-serif-luxury text-3xl sm:text-5xl font-normal leading-tight mb-6 ${
-                isLightMode ? 'text-[#1a1715]' : 'text-white'
+                isLightMode ? 'text-[#1C1410]' : 'text-[#EDE0CE]'
               }`}
               style={{ textWrap: 'balance' }}
             >
@@ -64,7 +64,7 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
 
             <p
               className={`text-sm sm:text-base leading-relaxed font-light mb-8 ${
-                isLightMode ? 'text-[#1a1715]/75' : 'text-[#e8ded1]/75'
+                isLightMode ? 'text-[#1C1410]/80' : 'text-[#EDE0CE]/80'
               }`}
             >
               Our beverage program treats zero-proof mixology with the same reverence as our kitchen. Led by beverage director <strong>Nkem Okafor</strong>, we forage wild herbs across Southern Nigeria and distill bespoke virgin cordials, cold-pressed reductions, and aged botanicals in our in-house glass rotary evaporator. Strictly alcohol-free and 100% halal.
@@ -75,11 +75,11 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
               <div
                 className={`flex items-start gap-3.5 sm:gap-4 p-3.5 sm:p-4 rounded-xl border transition-colors talkbox-interactive cursor-pointer min-w-0 ${
                   isLightMode
-                    ? 'bg-white border-[#1a1715]/10 shadow-sm'
-                    : 'bg-[#171513] border-white/5'
+                    ? 'bg-[#FAF6EF] border-[#1C1410]/10 shadow-sm text-[#1C1410]'
+                    : 'bg-[#251C17] border-[#EDE0CE]/10 text-[#EDE0CE]'
                 }`}
               >
-                <GlassWater className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
+                <ThreeDKunuGobletIcon size={26} className="shrink-0 mt-0.5" />
                 <div className="min-w-0 flex-1">
                   <h4 className="text-xs uppercase tracking-widest font-semibold">House Clarified Kunu Aya & Lemongrass</h4>
                   <p className="text-xs opacity-75 mt-0.5 font-light leading-relaxed">
@@ -91,11 +91,11 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
               <div
                 className={`flex items-start gap-3.5 sm:gap-4 p-3.5 sm:p-4 rounded-xl border transition-colors talkbox-interactive cursor-pointer min-w-0 ${
                   isLightMode
-                    ? 'bg-white border-[#1a1715]/10 shadow-sm'
-                    : 'bg-[#171513] border-white/5'
+                    ? 'bg-[#FAF6EF] border-[#1C1410]/10 shadow-sm text-[#1C1410]'
+                    : 'bg-[#251C17] border-[#EDE0CE]/10 text-[#EDE0CE]'
                 }`}
               >
-                <Sparkles className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
+                <ThreeDApothecaryIcon size={26} className="shrink-0 mt-0.5" />
                 <div className="min-w-0 flex-1">
                   <h4 className="text-xs uppercase tracking-widest font-semibold">The Apothecary & Rare Tisane Reserve</h4>
                   <p className="text-xs opacity-75 mt-0.5 font-light leading-relaxed">
@@ -108,7 +108,7 @@ export const MixologySkyline: React.FC<MixologySkylineProps> = ({
 
             <button
               onClick={() => onOpenBooking('Sunset Terrace Lounge')}
-              className="w-full sm:w-auto px-6 sm:px-7 py-3 rounded-full border border-[#cba358]/60 text-[#cba358] hover:bg-[#cba358] hover:text-[#080706] text-xs tracking-[0.16em] sm:tracking-[0.2em] uppercase font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-center"
+              className="w-full sm:w-auto px-6 sm:px-7 py-3 rounded-full border border-[#B8894A]/70 text-[#B8894A] hover:bg-[#B8894A] hover:text-[#1C1410] text-xs tracking-[0.16em] sm:tracking-[0.2em] uppercase font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-center"
             >
               <span>Reserve Rooftop Sunset Lounge</span>
               <ArrowRight className="w-4 h-4 shrink-0" />

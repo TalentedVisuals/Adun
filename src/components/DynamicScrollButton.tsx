@@ -1,77 +1,56 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowDown, ArrowUp } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 
 interface DynamicScrollButtonProps {
-  isLightMode?: boolean;
+  isLightMode: boolean;
 }
 
-export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLightMode = false }) => {
+export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLightMode }) => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [hasScrolled, setHasScrolled] = useState(false);
-
-  // Calculate scroll position and determine if at the bottom
-  const handleScroll = useCallback(() => {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const windowHeight = window.innerHeight;
-    const fullHeight = document.documentElement.scrollHeight;
-    const maxScroll = Math.max(fullHeight - windowHeight, 1);
-
-    const progress = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
-    setScrollProgress(progress);
-    setHasScrolled(scrollTop > 40);
-
-    // Consider at bottom if within 90px of document end or progress > 0.96
-    const atBottom = scrollTop + windowHeight >= fullHeight - 90 || progress >= 0.96;
-    setIsAtBottom(atBottom);
-  }, []);
 
   useEffect(() => {
-    // Initial check
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+      const totalScrollable = Math.max(1, scrollHeight - clientHeight);
+      
+      const progress = Math.min(1, Math.max(0, scrollY / totalScrollable));
+      setScrollProgress(progress);
+
+      // Check if user is within 100px of page bottom
+      const nearBottom = scrollY + clientHeight >= scrollHeight - 100;
+      setIsAtBottom(nearBottom);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    let ticking = false;
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, [handleScroll]);
-
-  // Dynamic scroll action: Scroll to bottom immediately if not at bottom; scroll to top if at bottom
   const handleClick = () => {
     if (isAtBottom) {
+      // Smooth immediate scroll to top of window
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
       });
     } else {
-      const target = document.documentElement.scrollHeight - window.innerHeight;
+      // Smooth immediate scroll to bottom of document
       window.scrollTo({
-        top: target,
+        top: document.documentElement.scrollHeight,
         behavior: 'smooth',
       });
     }
   };
 
-  // SVG Progress Ring calculations
+  // Circular progress ring calculation
   const size = 52;
-  const strokeWidth = 2.5;
-  const radius = (size - strokeWidth * 2) / 2;
+  const strokeWidth = 3;
+  const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - scrollProgress * circumference;
 
@@ -91,14 +70,14 @@ export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLigh
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className={`hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-serif-luxury tracking-wider shadow-lg border backdrop-blur-md pointer-events-none ${
               isLightMode
-                ? 'bg-[#fbf9f5]/95 text-[#1a1715] border-[#94691b]/30 shadow-black/10'
-                : 'bg-[#141210]/95 text-[#f7ecd5] border-[#cba358]/30 shadow-black/50'
+                ? 'bg-[#FAF6EF]/95 text-[#1C1410] border-[#8C632C]/30 shadow-black/10'
+                : 'bg-[#251C17]/95 text-[#EDE0CE] border-[#B8894A]/30 shadow-black/50'
             }`}
           >
-            <span className="text-[#cba358] font-tabular text-[10px] uppercase tracking-widest font-mono">
+            <span className="text-[#B8894A] font-tabular text-[10px] uppercase tracking-widest font-mono">
               {Math.round(scrollProgress * 100)}%
             </span>
-            <span className="w-1 h-1 rounded-full bg-[#cba358]/50" />
+            <span className="w-1 h-1 rounded-full bg-[#B8894A]/50" />
             <span className="whitespace-nowrap">
               {isAtBottom ? 'Return to Top' : 'Scroll to Bottom'}
             </span>
@@ -114,10 +93,10 @@ export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLigh
         title={isAtBottom ? 'Return to Top' : 'Scroll to Bottom'}
         whileHover={{ scale: 1.08, y: -2 }}
         whileTap={{ scale: 0.9 }}
-        className={`relative w-[52px] h-[52px] rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#cba358] cursor-pointer group ${
+        className={`relative w-[52px] h-[52px] rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8894A] cursor-pointer group ${
           isLightMode
-            ? 'bg-[#fbf9f5]/90 text-[#1a1715] shadow-[0_8px_25px_rgba(148,105,27,0.18),0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(148,105,27,0.32)] border border-[#94691b]/20 hover:border-[#94691b]/60'
-            : 'bg-[#141210]/90 text-[#e8ded1] shadow-[0_8px_30px_rgba(0,0,0,0.7),0_0_20px_rgba(203,163,88,0.2)] hover:shadow-[0_12px_36px_rgba(203,163,88,0.38)] border border-[#cba358]/25 hover:border-[#cba358]/70'
+            ? 'bg-[#FAF6EF]/95 text-[#1C1410] shadow-[0_8px_25px_rgba(140,59,30,0.15),0_2px_8px_rgba(0,0,0,0.06)] hover:shadow-[0_12px_32px_rgba(140,59,30,0.25)] border border-[#8C632C]/25 hover:border-[#8C632C]/60'
+            : 'bg-[#251C17]/95 text-[#EDE0CE] shadow-[0_8px_30px_rgba(0,0,0,0.7),0_0_20px_rgba(184,137,74,0.2)] hover:shadow-[0_12px_36px_rgba(184,137,74,0.38)] border border-[#B8894A]/30 hover:border-[#B8894A]/70'
         }`}
       >
         {/* Subtle breathing ambient halo */}
@@ -131,7 +110,7 @@ export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLigh
             repeat: Infinity,
             ease: 'easeInOut',
           }}
-          className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#cba358]/20 to-transparent -z-10 blur-sm pointer-events-none"
+          className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#B8894A]/25 to-transparent -z-10 blur-sm pointer-events-none"
         />
 
         {/* Circular SVG Scroll Progress Indicator Ring */}
@@ -145,7 +124,7 @@ export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLigh
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke={isLightMode ? 'rgba(148, 105, 27, 0.15)' : 'rgba(203, 163, 88, 0.15)'}
+            stroke={isLightMode ? 'rgba(140, 59, 30, 0.15)' : 'rgba(184, 137, 74, 0.15)'}
             strokeWidth={strokeWidth}
           />
           {/* Active Animated Progress Stroke */}
@@ -154,7 +133,7 @@ export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLigh
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke={isLightMode ? '#94691b' : '#cba358'}
+            stroke={isLightMode ? '#8C632C' : '#B8894A'}
             strokeWidth={strokeWidth}
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
@@ -173,7 +152,7 @@ export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLigh
             rotate: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
             y: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' },
           }}
-          className="relative flex items-center justify-center text-[#cba358] group-hover:text-[#f7ecd5] transition-colors duration-300"
+          className="relative flex items-center justify-center text-[#B8894A] group-hover:text-[#EDE0CE] transition-colors duration-300"
         >
           <ArrowDown className="w-5 h-5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" />
         </motion.div>
@@ -185,7 +164,7 @@ export const DynamicScrollButton: React.FC<DynamicScrollButtonProps> = ({ isLigh
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0, opacity: 0 }}
-              className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#cba358] border-2 border-[#141210] shadow-[0_0_8px_#cba358]"
+              className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#B8894A] border-2 border-[#1C1410] shadow-[0_0_8px_#B8894A]"
             />
           )}
         </AnimatePresence>

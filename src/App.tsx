@@ -49,8 +49,8 @@ export default function App() {
     <div
       className={`min-h-screen transition-colors duration-500 font-sans-clean ${
         isLightMode
-          ? 'light-theme bg-[#f7f4ee] text-[#1a1715]'
-          : 'dark-theme bg-[#080706] text-[#e8ded1] bg-grain'
+          ? 'light-theme bg-[#EDE0CE] text-[#1C1410]'
+          : 'dark-theme bg-[#1C1410] text-[#EDE0CE] bg-grain'
       }`}
     >
       {/* Navigation */}

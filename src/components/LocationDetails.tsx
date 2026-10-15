@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock, ShieldCheck, Phone, Navigation, ArrowRight } from 'lucide-react';
+import { MapPin, Clock, ShieldCheck, Phone, Navigation } from 'lucide-react';
 import { ThreeDLocationIcon } from './ThreeDLocationIcon';
 
 interface LocationDetailsProps {
@@ -12,7 +12,7 @@ export const LocationDetails: React.FC<LocationDetailsProps> = ({ isLightMode, o
     <section
       id="location"
       className={`py-24 px-6 sm:px-8 border-t transition-colors ${
-        isLightMode ? 'bg-[#f7f4ee] border-[#1a1715]/10' : 'bg-[#11100e]/70 border-white/5'
+        isLightMode ? 'bg-[#EDE0CE] border-[#1C1410]/10 text-[#1C1410]' : 'bg-[#1C1410] border-[#EDE0CE]/10 text-[#EDE0CE]'
       }`}
     >
       <div className="max-w-7xl mx-auto">
@@ -23,27 +23,27 @@ export const LocationDetails: React.FC<LocationDetailsProps> = ({ isLightMode, o
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <ThreeDLocationIcon size={18} />
-                <span className="text-xs uppercase tracking-[0.25em] text-[#cba358] font-semibold">
+                <span className={`text-xs uppercase tracking-[0.25em] font-semibold ${isLightMode ? 'text-[#8C3B1E]' : 'text-[#B8894A]'}`}>
                   Arrival & Protocol
                 </span>
               </div>
               <h2
                 className={`font-serif-luxury text-3xl sm:text-5xl font-normal mb-4 ${
-                  isLightMode ? 'text-[#1a1715]' : 'text-white'
+                  isLightMode ? 'text-[#1C1410]' : 'text-[#EDE0CE]'
                 }`}
               >
                 Victoria Island, Lagos
               </h2>
-              <p className="text-xs sm:text-sm opacity-75 font-light leading-relaxed">
+              <p className="text-xs sm:text-sm opacity-80 font-light leading-relaxed">
                 Situated in a discreet residential sanctuary off Adeola Odeku, <strong>Adùn</strong> offers private gated driveway access with dedicated security and valet reception.
               </p>
             </div>
 
             {/* Protocol Specs */}
-            <div className="space-y-5 text-xs opacity-85">
+            <div className="space-y-5 text-xs opacity-90">
               
               <div className="flex items-start gap-3.5">
-                <MapPin className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-[#8C3B1E] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-semibold text-inherit block text-sm">Physical Sanctuary</span>
                   <span className="font-light opacity-80">
@@ -53,35 +53,35 @@ export const LocationDetails: React.FC<LocationDetailsProps> = ({ isLightMode, o
               </div>
 
               <div className="flex items-start gap-3.5">
-                <Clock className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
+                <Clock className="w-5 h-5 text-[#B8894A] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-semibold text-inherit block text-sm">Operating Hours</span>
                   <span className="block font-light">Tuesday – Sunday: 6:00 PM – Late</span>
-                  <span className="text-[11px] opacity-60 block mt-0.5">
+                  <span className="text-[11px] opacity-65 block mt-0.5">
                     Mondays: Closed for regional harvest trips & fermentation R&D
                   </span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3.5">
-                <ShieldCheck className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
+                <ShieldCheck className="w-5 h-5 text-[#8C3B1E] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-semibold text-inherit block text-sm">Valet & Dress Code</span>
                   <span className="block font-light">
                     Complimentary secure valet parking inside compound gates.
                   </span>
-                  <span className="text-[#cba358] block mt-0.5 font-medium">
+                  <span className="text-[#8C3B1E] block mt-0.5 font-medium">
                     Dress Code: Elevated Casual / Evening Glamour. No sportswear or beachwear.
                   </span>
                 </div>
               </div>
 
               <div className="flex items-start gap-3.5">
-                <Phone className="w-5 h-5 text-[#cba358] shrink-0 mt-0.5" />
+                <Phone className="w-5 h-5 text-[#B8894A] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-semibold text-inherit block text-sm">Reservations & Host Desk</span>
                   <span className="block font-light">Direct Desk: +234 813 547 5432</span>
-                  <span className="text-[11px] opacity-60 block">
+                  <span className="text-[11px] opacity-65 block">
                     WhatsApp Concierge Desk: +234 813 547 5432 (Daily 10:00 AM – 8:00 PM)
                   </span>
                 </div>
@@ -97,17 +97,17 @@ export const LocationDetails: React.FC<LocationDetailsProps> = ({ isLightMode, o
                 rel="noopener noreferrer"
                 className={`w-full sm:w-auto px-5 py-2.5 rounded-full border text-xs uppercase tracking-wider sm:tracking-widest transition flex items-center justify-center gap-2 text-center ${
                   isLightMode
-                    ? 'border-[#1a1715]/20 hover:border-[#cba358] text-[#1a1715]'
-                    : 'border-white/20 hover:border-[#cba358] text-white'
+                    ? 'border-[#1C1410]/20 hover:border-[#B8894A] text-[#1C1410]'
+                    : 'border-[#EDE0CE]/20 hover:border-[#B8894A] text-[#EDE0CE]'
                 }`}
               >
-                <Navigation className="w-3.5 h-3.5 text-[#cba358] shrink-0" />
+                <Navigation className="w-3.5 h-3.5 text-[#B8894A] shrink-0" />
                 <span>Google Maps Directions</span>
               </a>
 
               <button
                 onClick={onOpenBooking}
-                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#cba358] text-[#080706] font-semibold text-xs uppercase tracking-wider sm:tracking-widest hover:bg-[#e4c47e] transition shadow-md text-center"
+                className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#B8894A] text-[#1C1410] font-bold text-xs uppercase tracking-wider sm:tracking-widest hover:bg-[#CD9B58] transition shadow-md text-center"
               >
                 Reserve Online
               </button>
@@ -118,7 +118,7 @@ export const LocationDetails: React.FC<LocationDetailsProps> = ({ isLightMode, o
           {/* Interactive Styled Map View Card */}
           <div
             className={`lg:col-span-7 rounded-2xl sm:rounded-3xl overflow-hidden border relative min-h-[380px] sm:min-h-[420px] flex flex-col justify-between p-4 sm:p-8 transition-colors card-interactive ${
-              isLightMode ? 'bg-white border-[#1a1715]/10' : 'bg-[#171513] border-white/10'
+              isLightMode ? 'bg-[#FAF6EF] border-[#1C1410]/10' : 'bg-[#251C17] border-[#EDE0CE]/10'
             }`}
           >
             <div className="absolute inset-0 opacity-40">
@@ -136,21 +136,21 @@ export const LocationDetails: React.FC<LocationDetailsProps> = ({ isLightMode, o
             </div>
 
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-2">
-              <span className="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#11100e]/90 border border-[#cba358]/30 text-[#cba358] text-[10px] sm:text-xs uppercase tracking-wider sm:tracking-widest font-semibold backdrop-blur-md">
+              <span className="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#1C1410]/90 border border-[#B8894A]/40 text-[#B8894A] text-[10px] sm:text-xs uppercase tracking-wider sm:tracking-widest font-semibold backdrop-blur-md">
                 Secure Private Grounds
               </span>
-              <span className="px-2.5 py-1 sm:px-3 sm:py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] sm:text-[11px] font-medium backdrop-blur-md">
+              <span className="px-2.5 py-1 sm:px-3 sm:py-1 rounded-full bg-[#8C3B1E]/20 text-[#8C3B1E] border border-[#8C3B1E]/40 text-[10px] sm:text-[11px] font-semibold backdrop-blur-md">
                 24/7 Diplomatic Detail
               </span>
             </div>
 
             <div
               className={`relative z-10 p-4 sm:p-6 rounded-xl sm:rounded-2xl border backdrop-blur-md mt-16 sm:mt-24 talkbox-interactive cursor-pointer ${
-                isLightMode ? 'bg-white/95 border-[#1a1715]/10 text-[#1a1715]' : 'bg-[#11100e]/95 border-white/10 text-white'
+                isLightMode ? 'bg-[#FAF6EF]/95 border-[#1C1410]/10 text-[#1C1410]' : 'bg-[#251C17]/95 border-[#EDE0CE]/10 text-[#EDE0CE]'
               }`}
             >
               <h4 className="font-serif-luxury text-lg sm:text-xl font-medium mb-1">Host Desk Notice</h4>
-              <p className="text-xs opacity-75 font-light leading-relaxed">
+              <p className="text-xs opacity-80 font-light leading-relaxed">
                 Tables are graciously held for 15 minutes past your reserved seating time. For parties larger than 6 guests or custom salon menus, please contact our concierge desk directly.
               </p>
             </div>
