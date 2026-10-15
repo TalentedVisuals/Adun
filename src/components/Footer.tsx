@@ -16,7 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ isLightMode }) => {
     setIsSubmitting(true);
 
     try {
-      await fetch('https://formsubmit.co/ajax/32056367a847e46a95ba48aca22f7755', {
+      await fetch('https://formsubmit.co/ajax/thetalentedvisuals@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
