@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, CheckCircle2, Calendar, Clock, Users, Download, Copy, Check, Mail, MessageSquare, ExternalLink, Send, Sparkles, Smartphone, ShieldCheck } from 'lucide-react';
+import { X, CheckCircle2, Calendar, Clock, Users, Download, Copy, Check, MessageSquare, ExternalLink, Sparkles } from 'lucide-react';
 import { ReservationData } from '../types';
 
 interface ReservationModalProps {
@@ -30,16 +30,17 @@ const cleanWhatsAppNumber = (phoneStr: string): string => {
   if (digits.length === 10) {
     return '234' + digits;
   }
-  return digits || '2348135475432';
+  return digits || '2348023456789';
 };
 
-// Generate formatted WhatsApp message pass sent automatically from host number +2348135475432
+// Generate formatted WhatsApp reservation text
 const createWhatsAppMessage = (res: ReservationData): string => {
   return [
-    `👑 *ADÙN VICTORIA ISLAND — RESERVATION CONFIRMATION* 👑`,
+    `👑 *ADÙN VICTORIA ISLAND — RESERVATION* 👑`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    `Dear *${res.guestName}*,`,
-    `Your dining reservation at Adùn has been confirmed automatically.`,
+    `Hello Adùn Host Concierge,`,
+    ``,
+    `I would like to confirm my dining reservation:`,
     ``,
     `🔖 *Reference Pass:* ${res.referenceCode}`,
     `🏛 *Experience / Salon:* ${res.experience}`,
@@ -47,14 +48,14 @@ const createWhatsAppMessage = (res: ReservationData): string => {
     `⏰ *Seating Time:* ${res.time}`,
     `👥 *Party Size:* ${res.guests}`,
     `🥂 *Occasion:* ${res.occasion}`,
-    res.notes ? `📝 *Special Notes:* ${res.notes}` : '',
+    `👤 *Guest Name:* ${res.guestName}`,
+    `📱 *WhatsApp:* ${res.guestPhone}`,
+    res.notes ? `📝 *Special Notes & Dietary:* ${res.notes}` : '',
     ``,
     `📍 *Sanctuary:* Plot 14B Sinari Daranijo St, Victoria Island, Lagos`,
-    `🌿 *Cuisine & Cellar:* Strictly 100% Halal certified & alcohol-free botanical reserve.`,
-    `⏱ *Arrival Notice:* Tables are held for 15 minutes past scheduled time.`,
+    `🌿 Strictly 100% Halal certified & alcohol-free botanical reserve.`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    `Sent automatically from Adùn Concierge Desk: +234 813 547 5432`,
-    `Official Email: thetalentedvisuals@gmail.com`,
+    `Host Concierge Desk: +234 813 547 5432`,
   ].filter(Boolean).join('\n');
 };
 
@@ -79,14 +80,10 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
   const [email, setEmail] = useState('');
   const [notes, setNotes] = useState('');
 
-  // Confirmation Delivery Preference: 'whatsapp' | 'email' | 'both'
-  const [confirmationChannel, setConfirmationChannel] = useState<'whatsapp' | 'email' | 'both'>('whatsapp');
-
   // Confirmation Record
   const [confirmedReservation, setConfirmedReservation] = useState<ReservationData | null>(null);
   const [hasCopied, setHasCopied] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [dispatchTimestamp, setDispatchTimestamp] = useState<string>('');
 
   useEffect(() => {
     if (preselectedExperience) {
@@ -111,9 +108,10 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     const randomCode = 'ADUN-' + Math.floor(1000 + Math.random() * 9000);
     const reservationRecord: ReservationData = {
       referenceCode: randomCode,
@@ -127,90 +125,61 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
       guestEmail: email.trim(),
       notes: notes.trim(),
       createdAt: new Date().toISOString(),
-      confirmationChannel,
+      confirmationChannel: 'whatsapp',
     };
 
-    const cleanedPhone = cleanWhatsAppNumber(phone);
-    const channelLabel =
-      confirmationChannel === 'whatsapp'
-        ? 'WhatsApp Message (from +2348135475432)'
-        : confirmationChannel === 'email'
-        ? 'Email Confirmation (from thetalentedvisuals@gmail.com)'
-        : 'Both WhatsApp (+2348135475432) & Email (thetalentedvisuals@gmail.com)';
+    const messageText = createWhatsAppMessage(reservationRecord);
+    // WhatsApp URL directed to host desk +2348135475432
+    const targetWhatsAppUrl = `https://api.whatsapp.com/send?phone=2348135475432&text=${encodeURIComponent(messageText)}`;
 
-    const nowFormatted = new Date().toLocaleTimeString('en-NG', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    });
-    setDispatchTimestamp(nowFormatted);
-
-    // Dispatch directly to thetalentedvisuals@gmail.com with autoresponse and guest cc
+    // 1. Trigger WhatsApp immediately on reservation button action
     try {
-      const payload: Record<string, string> = {
-        _subject: `New Adùn Reservation [${randomCode}] - ${name.trim() || 'Valued Guest'} (${guests}) [Deliver via ${channelLabel}]`,
-        _template: 'table',
-        _captcha: 'false',
-        _replyto: email.trim() || 'thetalentedvisuals@gmail.com',
-        'Reference Code': randomCode,
-        'Guest Name': name.trim() || 'Valued Guest',
-        'Guest Phone / WhatsApp': phone.trim(),
-        'Guest Email': email.trim() || 'Not provided',
-        'Guest Preferred Confirmation Channel': channelLabel,
-        'Automated WhatsApp Sender': '+2348135475432 (Adùn Official Host Desk)',
-        'Automated Email Sender': 'thetalentedvisuals@gmail.com',
-        'Experience / Salon': experience,
-        'Reservation Date': date,
-        'Seating Time': time,
-        'Party Size': guests,
-        'Occasion': occasion,
-        'Dietary Allergies & Special Notes': notes.trim() || 'None specified',
-        'Host 1-Click WhatsApp Guest Reply': `https://wa.me/${cleanedPhone}?text=${encodeURIComponent(
-          `Hello ${name.trim() || 'Guest'}, your reservation [${randomCode}] at Adùn Victoria Island is confirmed for ${date} at ${time}. We look forward to hosting you.`
-        )}`,
-        'Submitted At': new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' }) + ' (WAT)',
-      };
-
-      // If user selected Email or Both, send automated confirmation email to the guest from thetalentedvisuals@gmail.com
-      if (email.trim() && (confirmationChannel === 'email' || confirmationChannel === 'both')) {
-        payload['_cc'] = email.trim();
-        payload['_autoresponse'] =
-          `Dear ${name.trim() || 'Valued Guest'},\n\n` +
-          `Thank you for reserving with Adùn Victoria Island. Your reservation has been automatically confirmed.\n\n` +
-          `━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
-          `RESERVATION DETAILS:\n` +
-          `Reference Pass: ${randomCode}\n` +
-          `Experience / Salon: ${experience}\n` +
-          `Date: ${date}\n` +
-          `Time: ${time}\n` +
-          `Party Size: ${guests}\n` +
-          `Occasion: ${occasion}\n` +
-          (notes.trim() ? `Special Notes: ${notes.trim()}\n` : '') +
-          `━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
-          `Sanctuary Address: Plot 14B Sinari Daranijo St, Victoria Island, Lagos\n` +
-          `Official Host Desk WhatsApp: +234 813 547 5432\n` +
-          `Official Concierge Email: thetalentedvisuals@gmail.com\n\n` +
-          `Important Note: All culinary preparations and beverages at Adùn are strictly 100% Halal certified and alcohol-free.\n\n` +
-          `We look forward to welcoming you to an unforgettable gastronomic journey.\n\n` +
-          `Warm regards,\n` +
-          `The Concierge Team at Adùn Victoria Island\nthetalentedvisuals@gmail.com`;
+      const openedWindow = window.open(targetWhatsAppUrl, '_blank');
+      if (!openedWindow) {
+        // If popup was blocked, fallback to direct location open
+        window.location.href = targetWhatsAppUrl;
       }
-
-      await fetch('https://formsubmit.co/ajax/thetalentedvisuals@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-    } catch (error) {
-      console.warn('FormSubmit transmission notice:', error);
-    } finally {
-      setIsSubmitting(false);
-      setConfirmedReservation(reservationRecord);
-      setStep('success');
+    } catch {
+      window.location.href = targetWhatsAppUrl;
     }
+
+    // 2. Transmit booking notification email to restaurant owner ONLY (thetalentedvisuals@gmail.com)
+    const cleanedGuestPhone = cleanWhatsAppNumber(phone);
+    const payload: Record<string, string> = {
+      _subject: `New Adùn Reservation [${randomCode}] - ${name.trim() || 'Valued Guest'} (${guests})`,
+      _template: 'table',
+      _captcha: 'false',
+      _replyto: email.trim() || 'thetalentedvisuals@gmail.com',
+      'Reference Code': randomCode,
+      'Guest Name': name.trim() || 'Valued Guest',
+      'Guest WhatsApp Phone': phone.trim(),
+      'Guest Email (if provided)': email.trim() || 'Not provided',
+      'Experience / Salon': experience,
+      'Reservation Date': date,
+      'Seating Time': time,
+      'Party Size': guests,
+      'Occasion': occasion,
+      'Dietary Allergies & Special Notes': notes.trim() || 'None specified',
+      'Host 1-Click WhatsApp Guest Reply': `https://wa.me/${cleanedGuestPhone}?text=${encodeURIComponent(
+        `Hello ${name.trim() || 'Guest'}, your reservation [${randomCode}] at Adùn Victoria Island is confirmed for ${date} at ${time}. We look forward to hosting you.`
+      )}`,
+      'Submitted At': new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' }) + ' (WAT)',
+    };
+
+    fetch('https://formsubmit.co/ajax/thetalentedvisuals@gmail.com', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+    }).catch((err) => {
+      console.warn('Host email notification notice:', err);
+    });
+
+    setConfirmedReservation(reservationRecord);
+    setIsSubmitting(false);
+    setStep('success');
   };
 
   const handleCopyCode = () => {
@@ -229,7 +198,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
       'PRODID:-//Adùn Victoria Island//Reservation Pass//EN',
       'BEGIN:VEVENT',
       `SUMMARY:Dinner Reservation at Adùn (${confirmedReservation.experience})`,
-      `DESCRIPTION:Reservation Reference: ${confirmedReservation.referenceCode}\\nGuests: ${confirmedReservation.guests}\\nHost Desk: +234 813 547 5432\\nEmail: thetalentedvisuals@gmail.com`,
+      `DESCRIPTION:Reservation Reference: ${confirmedReservation.referenceCode}\\nGuests: ${confirmedReservation.guests}\\nHost Desk: +234 813 547 5432`,
       'LOCATION:Plot 14B Sinari Daranijo St, Victoria Island, Lagos, Nigeria',
       `DTSTART:${confirmedReservation.date.replace(/-/g, '')}T180000Z`,
       `DTEND:${confirmedReservation.date.replace(/-/g, '')}T210000Z`,
@@ -252,19 +221,12 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
     onClose();
   };
 
-  // WhatsApp chat with Host Desk (+234 813 547 5432)
-  const hostDeskWhatsAppUrl = confirmedReservation
-    ? `https://wa.me/2348135475432?text=${encodeURIComponent(
-        `Hello Adùn Host Concierge, I just received my automated reservation pass [${confirmedReservation.referenceCode}] for ${confirmedReservation.guestName} (${confirmedReservation.guests}) on ${confirmedReservation.date} at ${confirmedReservation.time}. Thank you!`
-      )}`
-    : 'https://wa.me/2348135475432';
-
-  // WhatsApp pass URL to guest's phone number
-  const guestWhatsAppUrl = confirmedReservation
-    ? `https://wa.me/${cleanWhatsAppNumber(confirmedReservation.guestPhone)}?text=${encodeURIComponent(
+  // WhatsApp chat link to host desk
+  const directWhatsAppUrl = confirmedReservation
+    ? `https://api.whatsapp.com/send?phone=2348135475432&text=${encodeURIComponent(
         createWhatsAppMessage(confirmedReservation)
       )}`
-    : '';
+    : 'https://wa.me/2348135475432';
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-[#1C1410]/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
@@ -292,7 +254,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
                 Reserve Your Dining Experience
               </h3>
               <p className="text-xs opacity-75 font-light mt-1">
-                Automated confirmation delivered directly from Host Desk <strong>+234 813 547 5432</strong> or <strong>thetalentedvisuals@gmail.com</strong>.
+                Instant reservation confirmation. Connects directly with our host concierge desk.
               </p>
             </div>
 
@@ -401,96 +363,6 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
                 </div>
               </div>
 
-              {/* Guest Confirmation Delivery Preference Selector */}
-              <div className="pt-1">
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-[11px] tracking-widest uppercase opacity-85 font-semibold">
-                    How would you like to receive your reservation pass?
-                  </label>
-                  <span className="text-[10px] text-[#B8894A] font-medium">Automatic delivery</span>
-                </div>
-                
-                <div className="grid grid-cols-3 gap-2">
-                  {/* WhatsApp Option */}
-                  <button
-                    type="button"
-                    onClick={() => setConfirmationChannel('whatsapp')}
-                    className={`p-2.5 rounded-xl border text-left transition relative flex flex-col justify-between cursor-pointer ${
-                      confirmationChannel === 'whatsapp'
-                        ? 'border-emerald-500 bg-emerald-500/15 shadow-sm shadow-emerald-500/20 ring-1 ring-emerald-500/50'
-                        : isLightMode
-                        ? 'border-[#1C1410]/15 hover:border-emerald-500/40 bg-white'
-                        : 'border-[#EDE0CE]/15 hover:border-emerald-500/40 bg-[#1C1410]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <WhatsAppIcon className="w-4 h-4 text-emerald-500 shrink-0" />
-                      <span className="text-xs font-semibold text-emerald-500">WhatsApp</span>
-                    </div>
-                    <span className="text-[10px] opacity-75 leading-tight">
-                      Sent from +234 813 547 5432
-                    </span>
-                  </button>
-
-                  {/* Email Option */}
-                  <button
-                    type="button"
-                    onClick={() => setConfirmationChannel('email')}
-                    className={`p-2.5 rounded-xl border text-left transition relative flex flex-col justify-between cursor-pointer ${
-                      confirmationChannel === 'email'
-                        ? 'border-[#B8894A] bg-[#B8894A]/15 shadow-sm shadow-[#B8894A]/20 ring-1 ring-[#B8894A]/50'
-                        : isLightMode
-                        ? 'border-[#1C1410]/15 hover:border-[#B8894A]/40 bg-white'
-                        : 'border-[#EDE0CE]/15 hover:border-[#B8894A]/40 bg-[#1C1410]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <Mail className="w-4 h-4 text-[#B8894A] shrink-0" />
-                      <span className="text-xs font-semibold text-[#B8894A]">Email</span>
-                    </div>
-                    <span className="text-[10px] opacity-75 leading-tight">
-                      Sent from thetalentedvisuals@gmail.com
-                    </span>
-                  </button>
-
-                  {/* Both Option */}
-                  <button
-                    type="button"
-                    onClick={() => setConfirmationChannel('both')}
-                    className={`p-2.5 rounded-xl border text-left transition relative flex flex-col justify-between cursor-pointer ${
-                      confirmationChannel === 'both'
-                        ? 'border-[#B8894A] bg-gradient-to-r from-emerald-500/15 to-[#B8894A]/15 shadow-sm ring-1 ring-[#B8894A]/50'
-                        : isLightMode
-                        ? 'border-[#1C1410]/15 hover:border-[#B8894A]/40 bg-white'
-                        : 'border-[#EDE0CE]/15 hover:border-[#B8894A]/40 bg-[#1C1410]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-1.5 mb-1">
-                      <Send className="w-3.5 h-3.5 text-[#B8894A] shrink-0" />
-                      <span className="text-xs font-semibold">Both</span>
-                    </div>
-                    <span className="text-[10px] opacity-75 leading-tight">
-                      WhatsApp & Email
-                    </span>
-                  </button>
-                </div>
-
-                {/* Delivery Mode Explanatory Pill */}
-                <div className="mt-2 text-[10px] px-3 py-1.5 rounded-lg bg-current/5 border border-current/10 flex items-center justify-between opacity-85">
-                  <span className="flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#B8894A]" />
-                    <span>
-                      {confirmationChannel === 'whatsapp'
-                        ? 'WhatsApp message will be sent automatically from +234 813 547 5432'
-                        : confirmationChannel === 'email'
-                        ? 'Email will be sent automatically from thetalentedvisuals@gmail.com'
-                        : 'Automatic delivery from +234 813 547 5432 & thetalentedvisuals@gmail.com'}
-                    </span>
-                  </span>
-                  <span className="text-[#8C3B1E] font-medium hidden sm:inline">Host Ledger Sync</span>
-                </div>
-              </div>
-
               {/* Contact Information */}
               <div className="space-y-3 pt-1">
                 <div>
@@ -511,67 +383,34 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <label className="block text-[11px] tracking-widest uppercase opacity-70 font-medium">
-                        WhatsApp Number
-                      </label>
-                      {confirmationChannel !== 'email' ? (
-                        <span className="text-[9px] text-emerald-500 font-semibold uppercase tracking-wider">
-                          Required
-                        </span>
-                      ) : (
-                        <span className="text-[9px] opacity-50">Optional</span>
-                      )}
-                    </div>
+                    <label className="block text-[11px] tracking-widest uppercase opacity-70 mb-1 font-medium">
+                      WhatsApp Number
+                    </label>
                     <input
                       type="tel"
-                      required={confirmationChannel !== 'email'}
-                      placeholder="+234 813 547 5432"
+                      required
+                      placeholder="+234 802 345 6789"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className={`w-full px-4 py-2.5 rounded-xl border text-xs focus:outline-none transition ${
-                        confirmationChannel !== 'email'
-                          ? 'border-emerald-500/50 focus:border-emerald-500'
-                          : 'focus:border-[#B8894A]'
-                      } ${isLightMode ? 'bg-white border-[#1C1410]/15 text-[#1C1410]' : 'bg-[#1C1410] border-[#EDE0CE]/15 text-[#EDE0CE]'}`}
+                      className={`w-full px-4 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-emerald-500 ${
+                        isLightMode ? 'bg-white border-[#1C1410]/15 text-[#1C1410]' : 'bg-[#1C1410] border-[#EDE0CE]/15 text-[#EDE0CE]'
+                      }`}
                     />
-                    {confirmationChannel !== 'email' && (
-                      <span className="text-[10px] text-emerald-500 normal-case tracking-normal block mt-1">
-                        ✓ Pass sent automatically from +234 813 547 5432
-                      </span>
-                    )}
                   </div>
 
                   <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <label className="block text-[11px] tracking-widest uppercase opacity-70 font-medium">
-                        Email Address
-                      </label>
-                      {confirmationChannel !== 'whatsapp' ? (
-                        <span className="text-[9px] text-[#B8894A] font-semibold uppercase tracking-wider">
-                          Required
-                        </span>
-                      ) : (
-                        <span className="text-[9px] opacity-50">Optional</span>
-                      )}
-                    </div>
+                    <label className="block text-[11px] tracking-widest uppercase opacity-70 mb-1 font-medium">
+                      Email Address <span className="opacity-50 lowercase">(optional)</span>
+                    </label>
                     <input
                       type="email"
-                      required={confirmationChannel === 'email' || confirmationChannel === 'both'}
                       placeholder="e.g. adebayo@domain.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className={`w-full px-4 py-2.5 rounded-xl border text-xs focus:outline-none transition ${
-                        confirmationChannel !== 'whatsapp'
-                          ? 'border-[#B8894A]/50 focus:border-[#B8894A]'
-                          : 'focus:border-[#B8894A]'
-                      } ${isLightMode ? 'bg-white border-[#1C1410]/15 text-[#1C1410]' : 'bg-[#1C1410] border-[#EDE0CE]/15 text-[#EDE0CE]'}`}
+                      className={`w-full px-4 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B8894A] ${
+                        isLightMode ? 'bg-white border-[#1C1410]/15 text-[#1C1410]' : 'bg-[#1C1410] border-[#EDE0CE]/15 text-[#EDE0CE]'
+                      }`}
                     />
-                    {confirmationChannel !== 'whatsapp' && (
-                      <span className="text-[10px] text-[#B8894A] normal-case tracking-normal block mt-1">
-                        ✓ Sent automatically from thetalentedvisuals@gmail.com
-                      </span>
-                    )}
                   </div>
                 </div>
               </div>
@@ -597,196 +436,47 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#B8894A] to-[#996F38] text-[#1C1410] text-xs tracking-[0.2em] uppercase font-bold hover:shadow-lg hover:shadow-[#B8894A]/25 transition duration-300 disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 hover:from-emerald-500 hover:to-emerald-400 text-white text-xs tracking-[0.18em] uppercase font-bold hover:shadow-lg hover:shadow-emerald-500/25 transition duration-300 disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <span className="w-4 h-4 border-2 border-[#1C1410] border-t-transparent rounded-full animate-spin" />
-                      <span>Transmitting & Dispatching Pass...</span>
-                    </>
-                  ) : (
-                    <span>
-                      Book Table & Send Pass via{' '}
-                      {confirmationChannel === 'whatsapp'
-                        ? 'WhatsApp (+2348135475432)'
-                        : confirmationChannel === 'email'
-                        ? 'Email (thetalentedvisuals@gmail.com)'
-                        : 'WhatsApp & Email'}
-                    </span>
-                  )}
+                  <WhatsAppIcon className="w-4 h-4 text-white" />
+                  <span>Reserve Table on WhatsApp</span>
                 </button>
                 <p className="text-[10px] text-center opacity-65 mt-2">
-                  Immediate confirmation. Host ledger notified at thetalentedvisuals@gmail.com. Tables held for 15 minutes.
+                  Instant reservation. Tables held for 15 minutes past seating time.
                 </p>
               </div>
             </form>
           </div>
         ) : (
-          /* Step 2: Digital Dining Pass Success State with Automated Dispatch Details */
+          /* Step 2: Digital Dining Pass Success State */
           <div className="text-center py-2 sm:py-3">
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center mb-3">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
             <span className="text-xs uppercase tracking-widest text-[#B8894A] font-semibold">
-              Reservation Confirmed & Automatically Dispatched
+              Reservation Confirmed
             </span>
             <h3 className="font-serif-luxury text-2xl sm:text-3xl font-normal mt-1 mb-2 text-inherit">
-              We Look Forward to Welcoming You to Adùn
+              We Look Forward to Welcoming You
             </h3>
 
             <p className="text-xs opacity-75 max-w-sm mx-auto mb-4 font-light">
-              Your table is secured. Reservation details have been sent automatically as requested.
+              Your table is secured. Tap below to view your message thread in WhatsApp.
             </p>
 
-            {/* Automated Dispatch Status Feed */}
-            <div className="space-y-3 mb-5 max-w-md mx-auto text-left">
-              {/* WhatsApp Automated Delivery Status */}
-              {(confirmedReservation?.confirmationChannel === 'whatsapp' ||
-                confirmedReservation?.confirmationChannel === 'both') && (
-                <div className="p-3.5 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 shadow-sm">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <WhatsAppIcon className="w-4 h-4 text-emerald-500 shrink-0" />
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-500">
-                        WhatsApp Message Dispatched Automatically
-                      </span>
-                    </div>
-                    <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-500 bg-emerald-500/20 px-2 py-0.5 rounded-full">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Delivered {dispatchTimestamp}
-                    </span>
-                  </div>
-
-                  <div className="text-[11px] opacity-85 space-y-1 mb-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className="opacity-70">Sent from:</span>
-                      <span className="font-semibold text-inherit">+234 813 547 5432 (Adùn Host Desk)</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="opacity-70">Sent to:</span>
-                      <span className="font-semibold text-inherit">
-                        {confirmedReservation?.guestPhone || 'Guest WhatsApp'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="opacity-70">Status:</span>
-                      <span className="text-emerald-500 font-medium">✓✓ Automated dining pass delivered</span>
-                    </div>
-                  </div>
-
-                  {/* WhatsApp Message Bubble Simulation */}
-                  <div
-                    className={`rounded-xl p-3 text-[11px] border leading-relaxed mb-3 font-sans ${
-                      isLightMode
-                        ? 'bg-[#E7F3E8] border-emerald-600/20 text-[#1C1410]'
-                        : 'bg-[#142318] border-emerald-500/30 text-[#EDE0CE]'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between border-b border-current/10 pb-1.5 mb-1.5 text-[10px] opacity-75 font-mono">
-                      <span>From: +234 813 547 5432</span>
-                      <span>{dispatchTimestamp || 'Just now'} ✓✓</span>
-                    </div>
-                    <p className="font-bold text-[#8C3B1E] dark:text-[#B8894A] mb-1">
-                      👑 ADÙN VICTORIA ISLAND — RESERVATION PASS
-                    </p>
-                    <p className="opacity-90">
-                      Dear <strong>{confirmedReservation?.guestName}</strong>, your table for{' '}
-                      <strong>{confirmedReservation?.guests}</strong> on{' '}
-                      <strong>{confirmedReservation?.date}</strong> at <strong>{confirmedReservation?.time}</strong> is
-                      confirmed.
-                    </p>
-                    <p className="text-[10px] font-mono mt-1 opacity-70">
-                      Pass: {confirmedReservation?.referenceCode} • Salon: {confirmedReservation?.experience}
-                    </p>
-                  </div>
-
-                  {/* Actions for WhatsApp */}
-                  <div className="flex items-center gap-2">
-                    <a
-                      href={hostDeskWhatsAppUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 py-2 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs transition flex items-center justify-center gap-1.5 shadow cursor-pointer"
-                      title="Open conversation with sender +234 813 547 5432"
-                    >
-                      <WhatsAppIcon className="w-3.5 h-3.5" />
-                      <span>Chat with +234 813 547 5432</span>
-                      <ExternalLink className="w-3 h-3 opacity-70" />
-                    </a>
-
-                    {guestWhatsAppUrl && (
-                      <a
-                        href={guestWhatsAppUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="py-2 px-3 rounded-xl border border-current/20 hover:bg-current/10 text-xs transition flex items-center gap-1 cursor-pointer"
-                        title="View pass on WhatsApp"
-                      >
-                        <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>Open on Device</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Email Automated Delivery Status */}
-              {(confirmedReservation?.confirmationChannel === 'email' ||
-                confirmedReservation?.confirmationChannel === 'both') && (
-                <div className="p-3.5 rounded-2xl border border-[#B8894A]/40 bg-[#B8894A]/10 shadow-sm">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <Mail className="w-4 h-4 text-[#B8894A] shrink-0" />
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-[#B8894A]">
-                        Email Confirmation Dispatched Automatically
-                      </span>
-                    </div>
-                    <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#B8894A] bg-[#B8894A]/20 px-2 py-0.5 rounded-full">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#B8894A] animate-pulse" />
-                      Sent {dispatchTimestamp}
-                    </span>
-                  </div>
-
-                  <div className="text-[11px] opacity-85 space-y-1 mb-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className="opacity-70">Sent from:</span>
-                      <span className="font-semibold text-inherit font-mono text-[10px] sm:text-[11px]">
-                        thetalentedvisuals@gmail.com
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="opacity-70">Sent to:</span>
-                      <span className="font-semibold text-inherit">
-                        {confirmedReservation?.guestEmail || 'Guest Email'}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="opacity-70">Host Copy:</span>
-                      <span className="text-[#8C3B1E] dark:text-[#B8894A] font-medium">
-                        ✓ Dispatched to thetalentedvisuals@gmail.com
-                      </span>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`rounded-xl p-3 text-[11px] border leading-relaxed text-left font-sans ${
-                      isLightMode
-                        ? 'bg-[#FAF0E6] border-[#B8894A]/25 text-[#1C1410]'
-                        : 'bg-[#251C17] border-[#B8894A]/30 text-[#EDE0CE]'
-                    }`}
-                  >
-                    <p className="text-[10px] font-mono opacity-70 mb-1">
-                      Subject: New Adùn Reservation [{confirmedReservation?.referenceCode}] -{' '}
-                      {confirmedReservation?.guestName}
-                    </p>
-                    <p className="opacity-90">
-                      An automated confirmation voucher with date, time, dietary notes, and directions has been
-                      delivered to your inbox from <strong>thetalentedvisuals@gmail.com</strong>.
-                    </p>
-                  </div>
-                </div>
-              )}
+            {/* Direct WhatsApp Trigger Button */}
+            <div className="mb-5 max-w-md mx-auto">
+              <a
+                href={directWhatsAppUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs tracking-wider uppercase transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 cursor-pointer"
+              >
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>Open in WhatsApp</span>
+                <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+              </a>
             </div>
 
             {/* Boarding Pass Ticket */}
