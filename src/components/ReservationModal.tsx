@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, CheckCircle2, Calendar, Clock, Users, Download, Copy, Check, MessageSquare, ExternalLink, Sparkles } from 'lucide-react';
+import { X, CheckCircle2, Calendar, Clock, Users, Download, Copy, Check, ExternalLink, Sparkles, Smartphone, ShieldCheck } from 'lucide-react';
 import { ReservationData } from '../types';
 
 interface ReservationModalProps {
@@ -30,17 +30,15 @@ const cleanWhatsAppNumber = (phoneStr: string): string => {
   if (digits.length === 10) {
     return '234' + digits;
   }
-  return digits || '2348023456789';
+  return digits;
 };
 
-// Generate formatted WhatsApp reservation text
+// Generate formatted WhatsApp message pass
 const createWhatsAppMessage = (res: ReservationData): string => {
   return [
-    `👑 *ADÙN VICTORIA ISLAND — RESERVATION* 👑`,
+    `👑 *ADÙN VICTORIA ISLAND — RESERVATION PASS* 👑`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    `Hello Adùn Host Concierge,`,
-    ``,
-    `I would like to confirm my dining reservation:`,
+    `Dear *${res.guestName}*, your reservation has been confirmed:`,
     ``,
     `🔖 *Reference Pass:* ${res.referenceCode}`,
     `🏛 *Experience / Salon:* ${res.experience}`,
@@ -48,14 +46,13 @@ const createWhatsAppMessage = (res: ReservationData): string => {
     `⏰ *Seating Time:* ${res.time}`,
     `👥 *Party Size:* ${res.guests}`,
     `🥂 *Occasion:* ${res.occasion}`,
-    `👤 *Guest Name:* ${res.guestName}`,
-    `📱 *WhatsApp:* ${res.guestPhone}`,
-    res.notes ? `📝 *Special Notes & Dietary:* ${res.notes}` : '',
+    res.notes ? `📝 *Special Notes:* ${res.notes}` : '',
     ``,
     `📍 *Sanctuary:* Plot 14B Sinari Daranijo St, Victoria Island, Lagos`,
-    `🌿 Strictly 100% Halal certified & alcohol-free botanical reserve.`,
+    `🌿 *Cuisine & Cellar:* Strictly 100% Halal certified & alcohol-free botanical reserve.`,
+    `⏱ *Arrival Notice:* Tables are held for 15 minutes past scheduled time.`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━`,
-    `Host Concierge Desk: +234 813 547 5432`,
+    `Adùn Victoria Island Concierge Desk`,
   ].filter(Boolean).join('\n');
 };
 
@@ -108,10 +105,9 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     const randomCode = 'ADUN-' + Math.floor(1000 + Math.random() * 9000);
     const reservationRecord: ReservationData = {
       referenceCode: randomCode,
@@ -128,58 +124,58 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
       confirmationChannel: 'whatsapp',
     };
 
-    const messageText = createWhatsAppMessage(reservationRecord);
-    // WhatsApp URL directed to host desk +2348135475432
-    const targetWhatsAppUrl = `https://api.whatsapp.com/send?phone=2348135475432&text=${encodeURIComponent(messageText)}`;
+    const cleanedPhone = cleanWhatsAppNumber(phone);
+    const waMessage = createWhatsAppMessage(reservationRecord);
+    const waUrl = `https://wa.me/${cleanedPhone}?text=${encodeURIComponent(waMessage)}`;
 
-    // 1. Trigger WhatsApp immediately on reservation button action
+    // Trigger WhatsApp message directly when the reservation button is clicked
     try {
-      const openedWindow = window.open(targetWhatsAppUrl, '_blank');
-      if (!openedWindow) {
-        // If popup was blocked, fallback to direct location open
-        window.location.href = targetWhatsAppUrl;
-      }
-    } catch {
-      window.location.href = targetWhatsAppUrl;
+      const a = document.createElement('a');
+      a.href = waUrl;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    } catch (err) {
+      console.warn('WhatsApp launch notice:', err);
     }
 
-    // 2. Transmit booking notification email to restaurant owner ONLY (thetalentedvisuals@gmail.com)
-    const cleanedGuestPhone = cleanWhatsAppNumber(phone);
-    const payload: Record<string, string> = {
-      _subject: `New Adùn Reservation [${randomCode}] - ${name.trim() || 'Valued Guest'} (${guests})`,
-      _template: 'table',
-      _captcha: 'false',
-      _replyto: email.trim() || 'thetalentedvisuals@gmail.com',
-      'Reference Code': randomCode,
-      'Guest Name': name.trim() || 'Valued Guest',
-      'Guest WhatsApp Phone': phone.trim(),
-      'Guest Email (if provided)': email.trim() || 'Not provided',
-      'Experience / Salon': experience,
-      'Reservation Date': date,
-      'Seating Time': time,
-      'Party Size': guests,
-      'Occasion': occasion,
-      'Dietary Allergies & Special Notes': notes.trim() || 'None specified',
-      'Host 1-Click WhatsApp Guest Reply': `https://wa.me/${cleanedGuestPhone}?text=${encodeURIComponent(
-        `Hello ${name.trim() || 'Guest'}, your reservation [${randomCode}] at Adùn Victoria Island is confirmed for ${date} at ${time}. We look forward to hosting you.`
-      )}`,
-      'Submitted At': new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' }) + ' (WAT)',
-    };
+    // Send email notification ONLY to the restaurant owner at thetalentedvisuals@gmail.com
+    try {
+      const payload: Record<string, string> = {
+        _subject: `New Adùn Reservation [${randomCode}] - ${name.trim() || 'Valued Guest'} (${guests})`,
+        _template: 'table',
+        _captcha: 'false',
+        'Reference Code': randomCode,
+        'Guest Name': name.trim() || 'Valued Guest',
+        'Guest WhatsApp': phone.trim(),
+        'Guest Email': email.trim() || 'Not provided',
+        'Experience / Salon': experience,
+        'Reservation Date': date,
+        'Seating Time': time,
+        'Party Size': guests,
+        'Occasion': occasion,
+        'Dietary Allergies & Notes': notes.trim() || 'None specified',
+        'Guest WhatsApp Direct Link': `https://wa.me/${cleanedPhone}`,
+        'Submitted At': new Date().toLocaleString('en-NG', { timeZone: 'Africa/Lagos' }) + ' (WAT)',
+      };
 
-    fetch('https://formsubmit.co/ajax/thetalentedvisuals@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(payload),
-    }).catch((err) => {
-      console.warn('Host email notification notice:', err);
-    });
-
-    setConfirmedReservation(reservationRecord);
-    setIsSubmitting(false);
-    setStep('success');
+      await fetch('https://formsubmit.co/ajax/thetalentedvisuals@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      console.warn('Owner notification email notice:', error);
+    } finally {
+      setIsSubmitting(false);
+      setConfirmedReservation(reservationRecord);
+      setStep('success');
+    }
   };
 
   const handleCopyCode = () => {
@@ -198,7 +194,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
       'PRODID:-//Adùn Victoria Island//Reservation Pass//EN',
       'BEGIN:VEVENT',
       `SUMMARY:Dinner Reservation at Adùn (${confirmedReservation.experience})`,
-      `DESCRIPTION:Reservation Reference: ${confirmedReservation.referenceCode}\\nGuests: ${confirmedReservation.guests}\\nHost Desk: +234 813 547 5432`,
+      `DESCRIPTION:Reservation Reference: ${confirmedReservation.referenceCode}\\nGuests: ${confirmedReservation.guests}`,
       'LOCATION:Plot 14B Sinari Daranijo St, Victoria Island, Lagos, Nigeria',
       `DTSTART:${confirmedReservation.date.replace(/-/g, '')}T180000Z`,
       `DTEND:${confirmedReservation.date.replace(/-/g, '')}T210000Z`,
@@ -221,12 +217,12 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
     onClose();
   };
 
-  // WhatsApp chat link to host desk
-  const directWhatsAppUrl = confirmedReservation
-    ? `https://api.whatsapp.com/send?phone=2348135475432&text=${encodeURIComponent(
+  // WhatsApp pass URL to guest's phone number
+  const guestWhatsAppUrl = confirmedReservation
+    ? `https://wa.me/${cleanWhatsAppNumber(confirmedReservation.guestPhone)}?text=${encodeURIComponent(
         createWhatsAppMessage(confirmedReservation)
       )}`
-    : 'https://wa.me/2348135475432';
+    : '';
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-[#1C1410]/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4">
@@ -254,7 +250,7 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
                 Reserve Your Dining Experience
               </h3>
               <p className="text-xs opacity-75 font-light mt-1">
-                Instant reservation confirmation. Connects directly with our host concierge desk.
+                Instant reservation pass dispatched to your WhatsApp. Tables held for 15 minutes.
               </p>
             </div>
 
@@ -383,34 +379,49 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-[11px] tracking-widest uppercase opacity-70 mb-1 font-medium">
-                      WhatsApp Number
-                    </label>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="block text-[11px] tracking-widest uppercase opacity-70 font-medium flex items-center gap-1.5">
+                        <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-500" />
+                        <span>WhatsApp Number</span>
+                      </label>
+                      <span className="text-[9px] text-emerald-500 font-semibold uppercase tracking-wider">
+                        Required
+                      </span>
+                    </div>
                     <input
                       type="tel"
                       required
-                      placeholder="+234 802 345 6789"
+                      placeholder="+234 803 456 7890"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className={`w-full px-4 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-emerald-500 ${
-                        isLightMode ? 'bg-white border-[#1C1410]/15 text-[#1C1410]' : 'bg-[#1C1410] border-[#EDE0CE]/15 text-[#EDE0CE]'
+                      className={`w-full px-4 py-2.5 rounded-xl border text-xs focus:outline-none border-emerald-500/40 focus:border-emerald-500 transition ${
+                        isLightMode ? 'bg-white text-[#1C1410]' : 'bg-[#1C1410] text-[#EDE0CE]'
                       }`}
                     />
+                    <span className="text-[10px] opacity-65 normal-case tracking-normal block mt-1">
+                      Reservation pass will open directly in your WhatsApp
+                    </span>
                   </div>
 
                   <div>
-                    <label className="block text-[11px] tracking-widest uppercase opacity-70 mb-1 font-medium">
-                      Email Address <span className="opacity-50 lowercase">(optional)</span>
-                    </label>
+                    <div className="flex justify-between items-center mb-1">
+                      <label className="block text-[11px] tracking-widest uppercase opacity-70 font-medium">
+                        Email Address
+                      </label>
+                      <span className="text-[9px] opacity-50">Optional</span>
+                    </div>
                     <input
                       type="email"
                       placeholder="e.g. adebayo@domain.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className={`w-full px-4 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B8894A] ${
+                      className={`w-full px-4 py-2.5 rounded-xl border text-xs focus:outline-none focus:border-[#B8894A] transition ${
                         isLightMode ? 'bg-white border-[#1C1410]/15 text-[#1C1410]' : 'bg-[#1C1410] border-[#EDE0CE]/15 text-[#EDE0CE]'
                       }`}
                     />
+                    <span className="text-[10px] opacity-65 normal-case tracking-normal block mt-1">
+                      Saved to guest ledger for special invitations
+                    </span>
                   </div>
                 </div>
               </div>
@@ -431,24 +442,33 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
                 />
               </div>
 
-              {/* Submit Button */}
+              {/* Gold Book Table Submit Button */}
               <div className="pt-2">
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 hover:from-emerald-500 hover:to-emerald-400 text-white text-xs tracking-[0.18em] uppercase font-bold hover:shadow-lg hover:shadow-emerald-500/25 transition duration-300 disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#B8894A] to-[#996F38] text-[#1C1410] text-xs tracking-[0.2em] uppercase font-bold hover:shadow-lg hover:shadow-[#B8894A]/25 transition duration-300 disabled:opacity-75 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
-                  <WhatsAppIcon className="w-4 h-4 text-white" />
-                  <span>Reserve Table on WhatsApp</span>
+                  {isSubmitting ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-[#1C1410] border-t-transparent rounded-full animate-spin" />
+                      <span>Confirming Reservation...</span>
+                    </>
+                  ) : (
+                    <>
+                      <WhatsAppIcon className="w-4 h-4" />
+                      <span>Book Table & Send WhatsApp Pass</span>
+                    </>
+                  )}
                 </button>
                 <p className="text-[10px] text-center opacity-65 mt-2">
-                  Instant reservation. Tables held for 15 minutes past seating time.
+                  Immediate confirmation. Tables held for 15 minutes past reservation time.
                 </p>
               </div>
             </form>
           </div>
         ) : (
-          /* Step 2: Digital Dining Pass Success State */
+          /* Step 2: Digital Dining Pass Success State with WhatsApp Details */
           <div className="text-center py-2 sm:py-3">
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center mb-3">
               <CheckCircle2 className="w-8 h-8" />
@@ -458,25 +478,79 @@ export const ReservationModal: React.FC<ReservationModalProps> = ({
               Reservation Confirmed
             </span>
             <h3 className="font-serif-luxury text-2xl sm:text-3xl font-normal mt-1 mb-2 text-inherit">
-              We Look Forward to Welcoming You
+              We Look Forward to Welcoming You to Adùn
             </h3>
 
             <p className="text-xs opacity-75 max-w-sm mx-auto mb-4 font-light">
-              Your table is secured. Tap below to view your message thread in WhatsApp.
+              Your table is secured. Your WhatsApp reservation pass has been generated.
             </p>
 
-            {/* Direct WhatsApp Trigger Button */}
-            <div className="mb-5 max-w-md mx-auto">
-              <a
-                href={directWhatsAppUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs tracking-wider uppercase transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/25 cursor-pointer"
-              >
-                <WhatsAppIcon className="w-4 h-4 text-white" />
-                <span>Open in WhatsApp</span>
-                <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-              </a>
+            {/* WhatsApp Pass Card */}
+            <div className="mb-5 max-w-md mx-auto text-left">
+              <div className="p-3.5 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 shadow-sm">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <WhatsAppIcon className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-500">
+                      WhatsApp Reservation Pass
+                    </span>
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-500 bg-emerald-500/20 px-2 py-0.5 rounded-full">
+                    <Check className="w-3 h-3 text-emerald-400" />
+                    Delivered
+                  </span>
+                </div>
+
+                <div className="text-[11px] opacity-85 space-y-1 mb-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="opacity-70">WhatsApp Number:</span>
+                    <span className="font-semibold text-inherit font-mono">
+                      {confirmedReservation?.guestPhone || 'Guest WhatsApp'}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="opacity-70">Reference Pass:</span>
+                    <span className="font-semibold text-[#B8894A] font-mono">
+                      {confirmedReservation?.referenceCode}
+                    </span>
+                  </div>
+                </div>
+
+                {/* WhatsApp Message Preview Bubble */}
+                <div
+                  className={`rounded-xl p-3 text-[11px] border leading-relaxed mb-3 font-sans ${
+                    isLightMode
+                      ? 'bg-[#E7F3E8] border-emerald-600/20 text-[#1C1410]'
+                      : 'bg-[#142318] border-emerald-500/30 text-[#EDE0CE]'
+                  }`}
+                >
+                  <p className="font-bold text-[#8C3B1E] dark:text-[#B8894A] mb-1">
+                    👑 ADÙN VICTORIA ISLAND — RESERVATION PASS
+                  </p>
+                  <p className="opacity-90">
+                    Dear <strong>{confirmedReservation?.guestName}</strong>, your table for{' '}
+                    <strong>{confirmedReservation?.guests}</strong> on{' '}
+                    <strong>{confirmedReservation?.date}</strong> at <strong>{confirmedReservation?.time}</strong> is
+                    confirmed.
+                  </p>
+                  <p className="text-[10px] font-mono mt-1 opacity-70">
+                    Pass: {confirmedReservation?.referenceCode} • Salon: {confirmedReservation?.experience}
+                  </p>
+                </div>
+
+                {/* Direct Action to Open WhatsApp */}
+                <a
+                  href={guestWhatsAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs transition flex items-center justify-center gap-2 shadow cursor-pointer"
+                  title="Open your reservation pass in WhatsApp"
+                >
+                  <WhatsAppIcon className="w-4 h-4" />
+                  <span>Open in WhatsApp</span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                </a>
+              </div>
             </div>
 
             {/* Boarding Pass Ticket */}
