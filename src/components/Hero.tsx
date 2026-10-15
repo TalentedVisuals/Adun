@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
-import { ArrowRight, Calendar, Compass, Clock } from 'lucide-react';
+import { ArrowRight, Calendar, Compass, Clock, ChevronLeft, ChevronRight, MoveHorizontal } from 'lucide-react';
 import { ImageWithFallback } from './ImageWithFallback';
 import { ThreeDLocationIcon } from './ThreeDLocationIcon';
 import { Currency } from '../types';
@@ -45,6 +45,24 @@ const HERO_VARIATIONS: HeroHeadlineVariation[] = [
   },
 ];
 
+const headlineVariants = {
+  enter: (dir: number) => ({
+    x: dir > 0 ? 48 : -48,
+    opacity: 0,
+    filter: 'blur(4px)',
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+    filter: 'blur(0px)',
+  },
+  exit: (dir: number) => ({
+    x: dir > 0 ? -48 : 48,
+    opacity: 0,
+    filter: 'blur(4px)',
+  }),
+};
+
 interface HeroProps {
   onOpenBooking: (experience?: string, date?: string, guests?: string) => void;
   currency: Currency;
@@ -57,13 +75,33 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
   const scaleParallax = useTransform(scrollY, [0, 600], [1, 1.04]);
 
   const [currentVariation, setCurrentVariation] = useState(0);
+  const [direction, setDirection] = useState<number>(1);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const goToNext = () => {
+    setDirection(1);
+    setCurrentVariation((prev) => (prev + 1) % HERO_VARIATIONS.length);
+  };
+
+  const goToPrev = () => {
+    setDirection(-1);
+    setCurrentVariation((prev) => (prev - 1 + HERO_VARIATIONS.length) % HERO_VARIATIONS.length);
+  };
+
+  const goToIndex = (idx: number) => {
+    if (idx === currentVariation) return;
+    setDirection(idx > currentVariation ? 1 : -1);
+    setCurrentVariation(idx);
+  };
 
   useEffect(() => {
+    if (isPaused) return;
     const timer = setInterval(() => {
+      setDirection(1);
       setCurrentVariation((prev) => (prev + 1) % HERO_VARIATIONS.length);
     }, 10000);
     return () => clearInterval(timer);
-  }, []);
+  }, [currentVariation, isPaused]);
 
   const activeVariation = HERO_VARIATIONS[currentVariation];
 
@@ -108,69 +146,158 @@ export const Hero: React.FC<HeroProps> = ({ onOpenBooking, currency, isLightMode
           </span>
         </motion.div>
 
-        {/* Dynamic Rotating Master Headline (10s Interval) */}
-        <div className="max-w-4xl mx-auto mb-6 min-h-[160px] sm:min-h-[200px] md:min-h-[220px] flex flex-col justify-center px-2 sm:px-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentVariation}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -14 }}
-              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className="text-center"
-            >
-              <h1
-                className={`font-serif-luxury text-3xl sm:text-5xl md:text-6xl lg:text-[5.25rem] font-normal leading-[1.08] sm:leading-[1.05] tracking-tight mb-4 sm:mb-5 ${
-                  isLightMode ? 'text-[#1a1715]' : 'text-white'
-                }`}
-                style={{ textWrap: 'balance' }}
+        {/* Dynamic Rotating Master Headline with Mobile Swipe & Desktop Drag */}
+        <div
+          className="relative max-w-4xl mx-auto mb-4 min-h-[160px] sm:min-h-[200px] md:min-h-[220px] flex flex-col justify-center px-2 sm:px-8"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          {/* Subtle Side Chevrons on Medium+ screens */}
+          <button
+            type="button"
+            onClick={goToPrev}
+            aria-label="Previous headline variation"
+            className={`hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full items-center justify-center border transition-all duration-300 ${
+              isLightMode
+                ? 'bg-white/80 border-[#1a1715]/10 text-[#1a1715]/70 hover:text-[#1a1715] hover:bg-white shadow-sm'
+                : 'bg-[#11100e]/80 border-white/10 text-white/70 hover:text-white hover:bg-[#11100e] hover:border-[#cba358]/50 shadow-md'
+            }`}
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          <button
+            type="button"
+            onClick={goToNext}
+            aria-label="Next headline variation"
+            className={`hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full items-center justify-center border transition-all duration-300 ${
+              isLightMode
+                ? 'bg-white/80 border-[#1a1715]/10 text-[#1a1715]/70 hover:text-[#1a1715] hover:bg-white shadow-sm'
+                : 'bg-[#11100e]/80 border-white/10 text-white/70 hover:text-white hover:bg-[#11100e] hover:border-[#cba358]/50 shadow-md'
+            }`}
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+          {/* Swipeable & Draggable Headline Container */}
+          <div className="overflow-hidden touch-pan-y">
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={currentVariation}
+                custom={direction}
+                variants={headlineVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                drag="x"
+                dragDirectionLock
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.25}
+                onDragEnd={(_e, info) => {
+                  const swipeThreshold = 35;
+                  const velocityThreshold = 200;
+                  if (info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold) {
+                    goToNext();
+                  } else if (info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold) {
+                    goToPrev();
+                  }
+                }}
+                className="text-center cursor-grab active:cursor-grabbing select-none px-1"
               >
-                {activeVariation.leadingText}
-                <span
-                  className={`italic transition-colors ${
-                    isLightMode
-                      ? 'gold-gradient-text-light font-normal drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]'
-                      : 'gold-gradient-text font-light'
+                <h1
+                  className={`font-serif-luxury text-3xl sm:text-5xl md:text-6xl lg:text-[5.25rem] font-normal leading-[1.08] sm:leading-[1.05] tracking-tight mb-4 sm:mb-5 ${
+                    isLightMode ? 'text-[#1a1715]' : 'text-white'
+                  }`}
+                  style={{ textWrap: 'balance' }}
+                >
+                  {activeVariation.leadingText}
+                  <span
+                    className={`italic transition-colors ${
+                      isLightMode
+                        ? 'gold-gradient-text-light font-normal drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]'
+                        : 'gold-gradient-text font-light'
+                    }`}
+                  >
+                    {activeVariation.highlightedText}
+                  </span>
+                  {activeVariation.trailingText}
+                </h1>
+                <p
+                  className={`text-xs sm:text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed pointer-events-none ${
+                    isLightMode ? 'text-[#1a1715]/80' : 'text-[#e8ded1]/75'
                   }`}
                 >
-                  {activeVariation.highlightedText}
-                </span>
-                {activeVariation.trailingText}
-              </h1>
-              <p
-                className={`text-xs sm:text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed ${
-                  isLightMode ? 'text-[#1a1715]/80' : 'text-[#e8ded1]/75'
-                }`}
-              >
-                {activeVariation.subheadline}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+                  {activeVariation.subheadline}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* Quiet Elegance Variation Progress Indicator */}
-        <div className="flex items-center justify-center gap-2 mb-8">
-          {HERO_VARIATIONS.map((v, idx) => (
+        {/* Quiet Elegance Variation Progress Indicator with Touch-Friendly Controls */}
+        <div className="flex flex-col items-center justify-center mb-8">
+          <div className="flex items-center justify-center gap-1.5 sm:gap-2">
+            {/* Mobile / Compact Previous Button */}
             <button
-              key={v.id}
-              onClick={() => setCurrentVariation(idx)}
-              className="p-1 cursor-pointer focus:outline-none"
-              aria-label={`Show variation ${idx + 1}`}
-              title={`Variation ${idx + 1}: ${v.leadingText}${v.highlightedText}`}
+              type="button"
+              onClick={goToPrev}
+              className={`p-2.5 rounded-full transition-colors flex items-center justify-center ${
+                isLightMode
+                  ? 'text-[#1a1715]/60 hover:text-[#1a1715] hover:bg-[#1a1715]/5'
+                  : 'text-white/60 hover:text-white hover:bg-white/5'
+              }`}
+              aria-label="Previous variation"
+              title="Previous"
             >
-              <div
-                className={`h-1 rounded-full transition-all duration-500 ${
-                  currentVariation === idx
-                    ? isLightMode
-                      ? 'w-8 bg-[#875f1b]'
-                      : 'w-8 bg-[#cba358]'
-                    : isLightMode
-                    ? 'w-2 bg-[#1a1715]/20 hover:bg-[#1a1715]/40'
-                    : 'w-2 bg-white/20 hover:bg-white/40'
-                }`}
-              />
+              <ChevronLeft className="w-4 h-4" />
             </button>
-          ))}
+
+            {/* Pagination Indicators with generous mobile hit area */}
+            <div className="flex items-center gap-1">
+              {HERO_VARIATIONS.map((v, idx) => (
+                <button
+                  key={v.id}
+                  onClick={() => goToIndex(idx)}
+                  className="py-3 px-1.5 cursor-pointer focus:outline-none flex items-center justify-center"
+                  aria-label={`Show variation ${idx + 1}`}
+                  title={`Variation ${idx + 1}: ${v.leadingText}${v.highlightedText}`}
+                >
+                  <div
+                    className={`h-1 rounded-full transition-all duration-500 ${
+                      currentVariation === idx
+                        ? isLightMode
+                          ? 'w-8 bg-[#875f1b]'
+                          : 'w-8 bg-[#cba358]'
+                        : isLightMode
+                        ? 'w-2.5 bg-[#1a1715]/20 hover:bg-[#1a1715]/40'
+                        : 'w-2.5 bg-white/20 hover:bg-white/40'
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile / Compact Next Button */}
+            <button
+              type="button"
+              onClick={goToNext}
+              className={`p-2.5 rounded-full transition-colors flex items-center justify-center ${
+                isLightMode
+                  ? 'text-[#1a1715]/60 hover:text-[#1a1715] hover:bg-[#1a1715]/5'
+                  : 'text-white/60 hover:text-white hover:bg-white/5'
+              }`}
+              aria-label="Next variation"
+              title="Next"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Micro Swipe Cue for Mobile */}
+          <div className="flex sm:hidden items-center justify-center gap-1.5 text-[10px] tracking-[0.22em] uppercase font-medium opacity-65 mt-1 select-none pointer-events-none">
+            <span className={isLightMode ? 'text-[#875f1b]' : 'text-[#cba358]'}>Swipe to switch story</span>
+          </div>
         </div>
 
         {/* Quick Table Seeker Bar */}
